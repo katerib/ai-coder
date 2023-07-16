@@ -1,0 +1,13 @@
+{
+    "items": {
+      "key": {
+        "name": "Key",
+        "description": "A small key that can open doors."
+      },
+      "torch": {
+        "name": "Torch",
+        "description": "A lit torch that provides light in dark places."
+      }
+    }
+  }
+  
