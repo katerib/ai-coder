@@ -1,0 +1,74 @@
+{
+    "objects": {
+        "cast": {
+            "name": "Mutated Pig's Footprint Cast",
+            "description": "A plaster cast of an unusual pig footprint.",
+            "effect": "Triggers dialogue with scientist to propel plot.",
+            "equipped": false,
+            "verbs": ["use", "examine", "show"]
+        },
+        "torchlight": {
+            "name": "UV Torchlight",
+            "description": "A torchlight that emits ultraviolet light.",
+            "effect": "Reveals hidden messages and mutant pig tracks.",
+            "equipped": false,
+            "verbs": ["use", "examine", "turn on", "turn off"]
+        },
+        "cell": {
+            "name": "Power Cell",
+            "description": "A peculiar energy source with glowing blue energy.",
+            "effect": "Powers up resistance's devices for research and planning.",
+            "equipped": false,
+            "verbs": ["use", "examine", "insert"]
+        },
+        "communicator": {
+            "name": "Resistance Communicator",
+            "description": "A handheld device for communicating with the resistance base.",
+            "effect": "Maintains contact with base and intercepts pig mutant communications when upgraded.",
+            "equipped": false,
+            "verbs": ["use", "examine", "turn on", "turn off", "upgrade"]
+        },
+        "sample": {
+            "name": "Mutagen Sample",
+            "description": "A glowing substance collected from the reactor site.",
+            "effect": "Provides proof of the power source and aids in devising sabotage plan.",
+            "equipped": false,
+            "verbs": ["use", "examine", "show"]
+        },
+        "blueprints": {
+            "name": "Reactor Blueprints",
+            "description": "Detailed schematics of the reactor's layout and weaknesses.",
+            "effect": "Provides crucial information for infiltrating and sabotaging the reactor.",
+            "equipped": false,
+            "verbs": ["use", "examine", "study"]
+        },
+        "cutter": {
+            "name": "Plasma Cutter",
+            "description": "A powerful tool that can cut through doors or fences.",
+            "effect": "Provides access to new areas and can be used as a makeshift weapon.",
+            "equipped": false,
+            "verbs": ["use", "examine", "cut"]
+        },
+        "shield": {
+            "name": "Laser Shield",
+            "description": "A high-tech device that absorbs energy from laser attacks.",
+            "effect": "Protects player from harm during the final showdown.",
+            "equipped": false,
+            "verbs": ["use", "examine", "activate", "deactivate"]
+        },
+        "message": {
+            "name": "Coded Message",
+            "description": "A cryptic message hinting at the location and weaknesses of the stronghold.",
+            "effect": "Must be deciphered back at the resistance base.",
+            "equipped": false,
+            "verbs": ["use", "examine", "decipher"]
+        },
+        "crown": {
+            "name": "Mutant King's Crown",
+            "description": "The crown of the defeated Pig Mutant King.",
+            "effect": "Symbolizes player's victory and can be put on display during the epilogue.",
+            "equipped": false,
+            "verbs": ["use", "examine", "display"]
+        }
+    }
+}
