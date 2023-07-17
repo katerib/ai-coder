@@ -17,8 +17,10 @@ The integration of AI in our development process has allowed us to tackle comple
 Make sure you have Python 3 installed on your system.
 
 1. Clone the repository: `git clone https://github.com/your-username/ai-coder.git`
-2. Install the required dependencies: `pip install -r requirements.txt`
-3. Run the game: `python main.py`
+2. Create your own virtual environment: `python3 -m venv env`
+3. Run your own virtual environment: `source env/bin/activate`
+4. Install the required dependencies: `pip install -r requirements.txt`
+5. Run the game: `python main.py`
 
 Please note that this is a terminal and text-based game.
 

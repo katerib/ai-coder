@@ -1,12 +1,10 @@
 from maps import Map
-from inventory import Inventory
 from objects import Objects
 from player import Player
 
 class TextAdventureGame:
-    def __init__(self, map_data, inventory_data, objects_data):
+    def __init__(self, map_data, objects_data):
         self.map = Map(map_data["rooms"])
-        self.inventory = Inventory(inventory_data["items"])
         self.objects = Objects(objects_data["objects"])
         self.player = None
 
@@ -14,7 +12,7 @@ class TextAdventureGame:
         name = input("Enter your name: ")
         starting_room_name = input("Enter the starting room: ")
         starting_room = self.map.get_room(starting_room_name)
-        self.player = Player(name, starting_room)
+        self.player = Player(name, starting_room, self.map, self.objects)
 
     def move_player(self, direction):
         self.player.move(direction)
