@@ -1,0 +1,74 @@
+{
+  "maps": {
+    "Room_1": {
+      "name": "Village Hut",
+      "interactive_items": ["old journal", "rusty knife"],
+      "object_interaction": {
+        "item1": {"description": "read journal", "obtained": false},
+        "item2": {"description": "use knife to open crates", "obtained": false}
+      },
+      "valid_moves": {"north": false, "south": false, "west": false, "east": true},
+      "description": "You wake up in a small, dilapidated hut in the village. The air is filled with tension, and distant oinks can be heard from outside."
+    },
+    "Room_2": {
+      "name": "Abandoned Laboratory",
+      "interactive_items": ["broken test tubes", "lab notes"],
+      "object_interaction": {
+        "item1": {"description": "examine test tubes", "obtained": false},
+        "item2": {"description": "read lab notes", "obtained": false}
+      },
+      "valid_moves": {"north": false, "south": false, "west": true, "east": false},
+      "description": "You enter a rundown laboratory filled with broken equipment and remnants of failed experiments. The stench of chemicals lingers in the air."
+    },
+    "Room_3": {
+      "name": "Resistance Hideout",
+      "interactive_items": ["resistance emblem", "weapon cache"],
+      "object_interaction": {
+        "item1": {"description": "inspect emblem", "obtained": false},
+        "item2": {"description": "equip weapons", "obtained": false}
+      },
+      "valid_moves": {"north": false, "south": true, "west": false, "east": true},
+      "description": "You find yourself in the secret hideout of the resistance group. The room is bustling with activity, and brave fighters gather to strategize and prepare for battle."
+    },
+    "Room_4": {
+      "name": "Reactor Tunnels",
+      "interactive_items": ["radiation detector", "cracked access panel"],
+      "object_interaction": {
+        "item1": {"description": "use detector", "obtained": false},
+        "item2": {"description": "repair panel with tools", "obtained": false}
+      },
+      "valid_moves": {"north": false, "south": true, "west": true, "east": false},
+      "description": "Navigating through dark and eerie tunnels, you approach the reactor. The air is heavy with radiation, and the sound of machinery echoes in the distance."
+    },
+    "Room_5": {
+      "name": "Pig Mutant Stronghold",
+      "interactive_items": ["security control panel", "captured resistance members"],
+      "object_interaction": {
+        "item1": {"description": "hack control panel", "obtained": false},
+        "item2": {"description": "free resistance members", "obtained": false}
+      },
+      "valid_moves": {"north": false, "south": true, "west": true, "east": true},
+      "description": "You stand before the fortified stronghold of the Pig Mutant King. The area is heavily guarded, and tortured cries of captured resistance members fill the air."
+    },
+    "Room_6": {
+      "name": "Throne Room",
+      "interactive_items": ["Pig Mutant King", "laser weapon"],
+      "object_interaction": {
+        "item1": {"description": "confront King", "obtained": false},
+        "item2": {"description": "wield laser weapon against King", "obtained": false}
+      },
+      "valid_moves": {"north": true, "south": false, "west": true, "east": false},
+      "description": "You enter the opulent throne room where the Pig Mutant King resides. The King sits atop a grand throne, emanating power and malice."
+    },
+    "Room_7": {
+      "name": "Victory Celebration",
+      "interactive_items": ["resistance allies", "restored Porktopia"],
+      "object_interaction": {
+        "item1": {"description": "celebrate with allies", "obtained": false},
+        "item2": {"description": "admire restored Porktopia", "obtained": false}
+      },
+      "valid_moves": {"north": true, "south": false, "west": false, "east": false},
+      "description": "The battle is won! You join the celebration with your fellow resistance fighters. The once-doomed Porktopia is now on its way to rebuilding and restoring peace."
+    }
+  }
+}
