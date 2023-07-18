@@ -1,7 +1,7 @@
-from maps import Map
-from inventory import Inventory
-from objects import Objects
-from player import Player
+from game.maps import Map
+from game.inventory import Inventory
+from game.objects import Objects
+from game.player import Player
 
 class TextAdventureGame:
     def __init__(self, map_data, inventory_data, objects_data):

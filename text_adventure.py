@@ -1,6 +1,6 @@
-from maps import Map
-from objects import Objects
-from player import Player
+from game.maps import Map
+from game.objects import Objects
+from game.player import Player
 
 class TextAdventureGame:
     def __init__(self, map_data, objects_data):
