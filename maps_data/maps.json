@@ -69,6 +69,36 @@
       },
       "valid_moves": {"north": true, "south": false, "west": false, "east": false},
       "description": "The battle is won! You join the celebration with your fellow resistance fighters. The once-doomed Porktopia is now on its way to rebuilding and restoring peace."
+    },
+    "Room_8": {
+      "name": "Torture Chamber",
+      "interactive_items": ["captured villagers", "torture devices"],
+      "object_interaction": {
+        "item1": {"description": "free villagers", "obtained": false},
+        "item2": {"description": "disable torture devices", "obtained": false}
+      },
+      "valid_moves": {"north": true, "south": true, "west": true, "east": true},
+      "description": "You enter a gruesome torture chamber where captured villagers endure unspeakable horrors. The room is filled with ominous devices and the agonizing cries of the tormented."
+    },
+    "Room_9": {
+      "name": "Ancient Temple",
+      "interactive_items": ["mystic artifact", "ancient scriptures"],
+      "object_interaction": {
+        "item1": {"description": "examine artifact", "obtained": false},
+        "item2": {"description": "decode scriptures", "obtained": false}
+      },
+      "valid_moves": {"north": false, "south": true, "west": true, "east": true},
+      "description": "You stumble upon an ancient temple shrouded in mystery. The air is thick with an otherworldly presence, and the walls are adorned with enigmatic symbols."
+    },
+    "Room_10": {
+      "name": "Hidden Crypt",
+      "interactive_items": ["cryptic engravings", "coffins"],
+      "object_interaction": {
+        "item1": {"description": "decode engravings", "obtained": false},
+        "item2": {"description": "search coffins", "obtained": false}
+      },
+      "valid_moves": {"north": true, "south": true, "west": false, "east": true},
+      "description": "You discover a hidden crypt deep within the underground tunnels. The walls are covered in cryptic engravings, and rows of ancient coffins line the chamber."
     }
   }
 }
