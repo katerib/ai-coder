@@ -27,8 +27,7 @@ class TextAdventureGame:
 
     def create_player(self):
         name = input("Enter your name: ")
-        starting_room_name = input("Enter the starting room: ")
-        starting_room = self.map.get_room(starting_room_name)
+        starting_room = self.map.get_room("Room_1")
         self.player = Player(name, starting_room, self.map, self.objects)
 
     def move_player(self, direction):

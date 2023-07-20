@@ -18,7 +18,7 @@ class Player:
 
     def take_item(self, item):
         # if item in self.current_room["items"]:
-        item_data = self.objects.get_object(item)
+        item_data = self.objects.take_object(item)
         self.inventory.add_item(item_data["name"])
         # self.current_room["items"].remove(item)
         print(f"You picked up {item_data['name']}")

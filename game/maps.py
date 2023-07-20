@@ -2,7 +2,7 @@ import json
 import os.path
 
 class Map:
-    def __init__(self):
+    def __init__(self, rooms):
         self.json_file_name = "maps_data/maps.json"
         self.json_file_name = os.path.normpath(self.json_file_name)
 
@@ -16,6 +16,10 @@ class Map:
     def start_room(self):
         """Initializes first room where the game starts"""
         self.current_room = self.map_data['maps']['Room_1']
+
+    def get_room(self, room_name):
+        """Returns the room data based on the given room name"""
+        return self.map_data['maps'].get(room_name)
 
     def get_current_room(self):
         return self.current_room
