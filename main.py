@@ -1,5 +1,5 @@
 import json
-from text_adventure import TextAdventureGame
+from game.text_adventure import TextAdventureGame
 
 # Load data from JSON files
 with open("data/objects_data.json") as file:
