@@ -1,1 +1,1 @@
-json
+# Placeholder for now. No files to import.
