@@ -1,5 +1,6 @@
 from game.inventory import Inventory
 
+
 class Player:
     def __init__(self, name, starting_room, game_map, objects):
         self.name = name
@@ -16,19 +17,10 @@ class Player:
         else:
             print("You can't go that way.")
 
-    def take_item(self, item):
-        # if item in self.current_room["items"]:
-        item_data = self.objects.take_object(item)
-        self.inventory.add_item(item_data["name"])
-        # self.current_room["items"].remove(item)
-        print(f"You picked up {item_data['name']}")
-        # else:
-        # print("There is no such item in this room.")
-
-    def use_item(self, item):
-        item_data = self.inventory.get_item(item)
-        if item_data:
-            # Implement the logic for using the item
-            print(f"You used {item_data['name']}")
-        else:
-            print("You don't have that item in your inventory.")
+    def take_item_from_room(self, item):
+        item = item.lower()
+        for room_item in self.current_room["interactive_items"]:
+            if item == room_item.lower():
+                self.current_room["interactive_items"].remove(room_item)
+                return room_item
+        return None

@@ -3,7 +3,7 @@ import os.path
 
 class Map:
     def __init__(self, rooms):
-        self.json_file_name = "maps_data/maps.json"
+        self.json_file_name = "data/maps.json"
         self.json_file_name = os.path.normpath(self.json_file_name)
 
         with open(self.json_file_name, 'r') as data:
