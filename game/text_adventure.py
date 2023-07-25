@@ -10,7 +10,7 @@ class TextAdventureGame:
 
     def __init__(self, map_data, objects_data):
         # def __init__(self, objects_data):
-        self.map = Map(map_data["maps"])
+        self.map = Map()
         self.objects = Objects(objects_data["objects"])
         self.player = None
 
@@ -32,6 +32,7 @@ class TextAdventureGame:
         Static method to check the terminal size. If the terminal size is too small, the game will not be playable.
         Terminal size should be checked throughout gameplay, likely before each command is entered.
         """
+
         size = os.get_terminal_size()
         if size.lines < TextAdventureGame.MIN_HEIGHT or size.columns < TextAdventureGame.MIN_WIDTH:
             print(
@@ -43,11 +44,11 @@ class TextAdventureGame:
 
     def create_player(self):
         name = input("Enter your name: ")
-        starting_room = self.map.get_room("Room_1")
+        starting_room = self.map.get_current_room()
         self.player = Player(name, starting_room, self.map, self.objects)
 
     def move_player(self, direction):
-        self.player.move(direction)
+        self.player.move(direction.strip())
 
     def take_item(self, item):
         item_data = self.player.take_item_from_room(item)
@@ -66,7 +67,8 @@ class TextAdventureGame:
             print("You don't have that item in your inventory.")
 
     def play(self):
-        self.check_terminal_size()
+        #commented out for testing
+        #self.check_terminal_size()
         self.create_player()
 
         # Print valid commands at the start of the game

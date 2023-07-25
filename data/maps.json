@@ -2,103 +2,63 @@
   "maps": {
     "Room_1": {
       "name": "Village Hut",
-      "interactive_items": ["old journal", "rusty knife"],
-      "object_interaction": {
-        "item1": {"description": "read journal", "obtained": false},
-        "item2": {"description": "use knife to open crates", "obtained": false}
-      },
+      "interactive_items": ["torchlight"],
       "valid_moves": {"north": false, "south": false, "west": false, "east": true},
-      "description": "You wake up in a small, dilapidated hut in the village. The air is filled with tension, and distant oinks can be heard from outside."
+      "description": "You wake up in a small, dilapidated hut in the village. You see an unlit torchlight. The air is filled with tension, and distant oinks can be heard from outside."
     },
     "Room_2": {
       "name": "Abandoned Laboratory",
-      "interactive_items": ["broken test tubes", "lab notes"],
-      "object_interaction": {
-        "item1": {"description": "examine test tubes", "obtained": false},
-        "item2": {"description": "read lab notes", "obtained": false}
-      },
+      "interactive_items": ["cast"],
       "valid_moves": {"north": false, "south": false, "west": true, "east": false},
-      "description": "You enter a rundown laboratory filled with broken equipment and remnants of failed experiments. The stench of chemicals lingers in the air."
+      "description": "You enter a rundown laboratory filled with broken equipment and remnants of failed experiments. You see a cast that seems significant. The stench of chemicals lingers in the air."
     },
     "Room_3": {
-      "name": "Resistance Hideout",
-      "interactive_items": ["resistance emblem", "weapon cache"],
-      "object_interaction": {
-        "item1": {"description": "inspect emblem", "obtained": false},
-        "item2": {"description": "equip weapons", "obtained": false}
-      },
-      "valid_moves": {"north": false, "south": true, "west": false, "east": true},
-      "description": "You find yourself in the secret hideout of the resistance group. The room is bustling with activity, and brave fighters gather to strategize and prepare for battle."
+      "name": "Ancient Temple",
+      "interactive_items": ["communicator"],
+      "valid_moves": {"north": false, "south": true, "west": true, "east": true},
+      "description": "You stumble upon an ancient temple shrouded in mystery. Maybe a communicator still works. The air is thick with an otherworldly presence, and the walls are adorned with enigmatic symbols."
     },
     "Room_4": {
-      "name": "Reactor Tunnels",
-      "interactive_items": ["radiation detector", "cracked access panel"],
-      "object_interaction": {
-        "item1": {"description": "use detector", "obtained": false},
-        "item2": {"description": "repair panel with tools", "obtained": false}
-      },
-      "valid_moves": {"north": false, "south": true, "west": true, "east": false},
-      "description": "Navigating through dark and eerie tunnels, you approach the reactor. The air is heavy with radiation, and the sound of machinery echoes in the distance."
+      "name": "Hidden Crypt",
+      "interactive_items": ["Laser Shield"],
+      "valid_moves": {"north": true, "south": true, "west": false, "east": true},
+      "description": "You discover a hidden crypt, that may open, deep within the underground tunnels. A shield on the ground. The walls are covered in cryptic engravings, and rows of ancient coffins line the chamber."
     },
     "Room_5": {
-      "name": "Pig Mutant Stronghold",
-      "interactive_items": ["security control panel", "captured resistance members"],
-      "object_interaction": {
-        "item1": {"description": "hack control panel", "obtained": false},
-        "item2": {"description": "free resistance members", "obtained": false}
-      },
-      "valid_moves": {"north": false, "south": true, "west": true, "east": true},
-      "description": "You stand before the fortified stronghold of the Pig Mutant King. The area is heavily guarded, and tortured cries of captured resistance members fill the air."
+      "name": "Resistance Hideout",
+      "interactive_items": ["blueprints"],
+      "valid_moves": {"north": false, "south": true, "west": false, "east": true},
+      "description": "You find yourself in the secret hideout of the resistance group. We will need blueprints. The room is bustling with activity, and brave fighters gather to strategize and prepare for battle."
     },
     "Room_6": {
-      "name": "Throne Room",
-      "interactive_items": ["Pig Mutant King", "laser weapon"],
-      "object_interaction": {
-        "item1": {"description": "confront King", "obtained": false},
-        "item2": {"description": "wield laser weapon against King", "obtained": false}
-      },
-      "valid_moves": {"north": true, "south": false, "west": true, "east": false},
-      "description": "You enter the opulent throne room where the Pig Mutant King resides. The King sits atop a grand throne, emanating power and malice."
+      "name": "Reactor Tunnels",
+      "interactive_items": ["cell"],
+      "valid_moves": {"north": false, "south": true, "west": true, "east": false},
+      "description": "Navigating through dark and eerie tunnels, you approach the reactor. If only I had a cell. The air is heavy with radiation, and the sound of machinery echoes in the distance."
     },
     "Room_7": {
-      "name": "Victory Celebration",
-      "interactive_items": ["resistance allies", "restored Porktopia"],
-      "object_interaction": {
-        "item1": {"description": "celebrate with allies", "obtained": false},
-        "item2": {"description": "admire restored Porktopia", "obtained": false}
-      },
-      "valid_moves": {"north": true, "south": false, "west": false, "east": false},
-      "description": "The battle is won! You join the celebration with your fellow resistance fighters. The once-doomed Porktopia is now on its way to rebuilding and restoring peace."
+      "name": "Torture Chamber",
+      "interactive_items": ["cutter"],
+      "valid_moves": {"north": true, "south": true, "west": true, "east": true},
+      "description": "You enter a gruesome torture chamber where captured villagers endure unspeakable horrors. A cutter would help. The room is filled with ominous devices and the agonizing cries of the tormented."
     },
     "Room_8": {
-      "name": "Torture Chamber",
-      "interactive_items": ["captured villagers", "torture devices"],
-      "object_interaction": {
-        "item1": {"description": "free villagers", "obtained": false},
-        "item2": {"description": "disable torture devices", "obtained": false}
-      },
-      "valid_moves": {"north": true, "south": true, "west": true, "east": true},
-      "description": "You enter a gruesome torture chamber where captured villagers endure unspeakable horrors. The room is filled with ominous devices and the agonizing cries of the tormented."
+      "name": "Pig Mutant Stronghold",
+      "interactive_items": ["message"],
+      "valid_moves": {"north": false, "south": true, "west": true, "east": true},
+      "description": "You stand before the fortified stronghold of the Pig Mutant King. There is a crumpled message. The area is heavily guarded, and tortured cries of captured resistance members fill the air."
     },
     "Room_9": {
-      "name": "Ancient Temple",
-      "interactive_items": ["mystic artifact", "ancient scriptures"],
-      "object_interaction": {
-        "item1": {"description": "examine artifact", "obtained": false},
-        "item2": {"description": "decode scriptures", "obtained": false}
-      },
-      "valid_moves": {"north": false, "south": true, "west": true, "east": true},
-      "description": "You stumble upon an ancient temple shrouded in mystery. The air is thick with an otherworldly presence, and the walls are adorned with enigmatic symbols."
+      "name": "Throne Room",
+      "interactive_items": ["Mutagen Sample"],
+      "valid_moves": {"north": true, "south": false, "west": true, "east": false},
+      "description": "You enter the opulent throne room where the Pig Mutant King resides. Next to the desk there is a Mutagen Sample. The King sits atop a grand throne, emanating power and malice."
     },
     "Room_10": {
-      "name": "Hidden Crypt",
-      "interactive_items": ["cryptic engravings", "coffins"],
-      "object_interaction": {
-        "item1": {"description": "decode engravings", "obtained": false},
-        "item2": {"description": "search coffins", "obtained": false}
-      },
-      "valid_moves": {"north": true, "south": true, "west": false, "east": true},
-      "description": "You discover a hidden crypt deep within the underground tunnels. The walls are covered in cryptic engravings, and rows of ancient coffins line the chamber."
+      "name": "Victory Celebration",
+      "interactive_items": ["crown"],
+      "valid_moves": {"north": true, "south": false, "west": false, "east": false},
+      "description": "The battle is won! Take your crown! You join the celebration with your fellow resistance fighters. The once-doomed Porktopia is now on its way to rebuilding and restoring peace."
     }
   }
 }
