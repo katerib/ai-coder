@@ -2,27 +2,50 @@ import json
 import os.path
 
 class Map:
-    def __init__(self, rooms):
+    def __init__(self):
         self.json_file_name = "data/maps.json"
         self.json_file_name = os.path.normpath(self.json_file_name)
 
         with open(self.json_file_name, 'r') as data:
             self.map_data = json.load(data)
 
+        self.room_list = []
+        for room in self.map_data['maps']:
+            print(self.map_data['maps'][room])
+            self.room_list.append(self.map_data['maps'][room])
+        print(len(self.room_list))
+        self.room_count = 0
+
         # Set up detail variables and initialize first map room
-        self.current_room = None
-        self.start_room()
+        self.current_room = self.room_list[0].copy()
 
-    def start_room(self):
-        """Initializes first room where the game starts"""
-        self.current_room = self.map_data['maps']['Room_1']
-
-    def get_room(self, room_name):
-        """Returns the room data based on the given room name"""
-        return self.map_data['maps'].get(room_name)
 
     def get_current_room(self):
         return self.current_room
+
+    def is_move_valid(self, direction):
+        """checks the current room valid moves"""
+        try:
+            if self.current_room['valid_moves'][direction]:
+                return True
+            else:
+                return False
+        except:
+            print("Wrong direction input")
+            return False
+
+    def get_next_room(self):
+        """moves linear to next room if right direction chosen"""
+        if self.room_count == 9:
+            print("Game is over")
+            return False
+
+        self.room_count += 1
+        return self.room_list[self.room_count]
+
+    def get_room(self, roomname):
+        print(self.current_room)
+        return self.map_data['maps'][roomname]
 
     def get_last_room(self):
         return self.last_room
