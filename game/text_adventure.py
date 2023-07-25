@@ -1,6 +1,9 @@
 from game.maps import Map
 from game.objects import Objects
 from game.player import Player
+from game.command_parser import CommandParser
+from game.verbs import hit_verb, pull_verb, eat_verb, look_verb, look_at_verb, inventory_verb
+from game.prepositions import PREPOSITIONS
 import os
 
 
@@ -8,14 +11,13 @@ class TextAdventureGame:
     MIN_WIDTH = 80          # Minimum terminal width in columns
     MIN_HEIGHT = 24         # Minimum terminal height in lines
 
-    def __init__(self, map_data, objects_data):
-        # def __init__(self, objects_data):
+    def __init__(self, objects_data):
         self.map = Map()
         self.objects = Objects(objects_data["objects"])
         self.player = None
 
     @staticmethod
-    def print_valid_commands():
+    def help_command():
         """
         Static method to print a list of supported verbs (commands) for the player to utilize.
         """
@@ -23,8 +25,19 @@ class TextAdventureGame:
         print("- move (to navigate between rooms)")
         print("- take (to pick up items)")
         print("- use (to use items)")
+        print("- hit (to hit something)")
+        print("- pull (to pull something)")
+        print("- go (to navigate between rooms)")
+        print("- eat (to eat something)")
+        print("- look (to look around the room)")
+        print("- look at (to look at something)")
+        print("- inventory (to view your inventory)")
         print("- quit (to exit the game)")
         # Add more commands as needed
+
+        # Not sure if we should show this? OR maybe add to the help command.
+        # print("\nPrepositions:")
+        # print(", ".join(PREPOSITIONS))
 
     @staticmethod
     def check_terminal_size():
@@ -58,21 +71,67 @@ class TextAdventureGame:
         else:
             print("There is no such item in this room.")
 
+
     def use_item(self, item):
-        item_data = self.player.inventory.get_item(item)
+        # Get the item data from the Objects class based on the item name
+        item_data = self.objects.get_object(item)
+
         if item_data:
-            # Implement the logic for using the item
-            print(f"You used {item_data['name']}")
+            item_name = item_data["name"]
+
+            # Check if the item exists in the player's inventory
+            inventory_item = self.player.inventory.get_item(item)
+            if inventory_item:
+                if item_data["equipped"]:
+                    # Item is already equipped, print a message to inform the player
+                    print(f"The {item_name} is already equipped.")
+                else:
+                    # Mark the item as equipped in the objects JSON
+                    self.objects.mark_item_as_equipped(item)
+                    # Print out the effect of using the item
+                    self.objects.handle_item_effect(item_data)
+            else:
+                print("You don't have that item in your inventory.")
         else:
-            print("You don't have that item in your inventory.")
+            print("Item not found.")
+
+    def handle_command(self, verb, obj):
+        if verb == "move":
+            self.move_player(obj)
+        elif verb == "take":
+            self.take_item(obj)
+        elif verb == "use":
+            self.use_item(obj)
+        elif verb == "quit":
+            exit()
+        elif verb == "hit":
+            hit_verb(obj)
+        elif verb == "pull":
+            pull_verb(obj)
+        elif verb == "go":
+            self.move_player(obj)
+        elif verb == "eat":
+            eat_verb(obj)
+        elif verb == "look":
+            look_verb(self.player.current_room["description"])
+        elif verb == "look at":
+            look_at_verb(obj)
+        elif verb == "inventory":
+            inventory_verb(self.player.inventory)
+        elif verb == "help":
+            self.help_command()
+        elif verb == "drop":
+            self.player.drop_item(obj)
+        else:
+            print("Invalid command.")
 
     def play(self):
-        #commented out for testing
-        #self.check_terminal_size()
+        # commented out for testing
+        # self.check_terminal_size()
         self.create_player()
 
-        # Print valid commands at the start of the game
-        self.print_valid_commands()
+        # # Print valid commands at the start of the game
+        print(f"Welcome to the game {self.player.get_name()}! Type help for a list of commands.")
 
         while True:
             print("\n---")
@@ -81,16 +140,11 @@ class TextAdventureGame:
 
             command = input("Enter your command: ").lower()
 
-            if command == "move":
-                direction = input("Enter the direction to move: ")
-                self.move_player(direction)
-            elif command == "take":
-                item = input("Enter the item to take: ")
-                self.take_item(item)
-            elif command == "use":
-                item = input("Enter the item to use: ")
-                self.use_item(item)
-            elif command == "quit":
-                break
-            else:
+            verb, obj = CommandParser.parse_command(
+                command, PREPOSITIONS)
+
+            if not verb:
                 print("Invalid command.")
+            else:
+                self.handle_command(verb, obj)
+
