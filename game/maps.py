@@ -1,6 +1,7 @@
 import json
 import os.path
 
+
 class Map:
     def __init__(self):
         self.json_file_name = "data/maps.json"
@@ -11,14 +12,13 @@ class Map:
 
         self.room_list = []
         for room in self.map_data['maps']:
-            print(self.map_data['maps'][room])
+            # print(self.map_data['maps'][room])
             self.room_list.append(self.map_data['maps'][room])
-        print(len(self.room_list))
+        # print(len(self.room_list))
         self.room_count = 0
 
         # Set up detail variables and initialize first map room
         self.current_room = self.room_list[0].copy()
-
 
     def get_current_room(self):
         return self.current_room
@@ -26,13 +26,28 @@ class Map:
     def is_move_valid(self, direction):
         """checks the current room valid moves"""
         try:
-            if self.current_room['valid_moves'][direction]:
+            valid_moves = self.current_room['valid_moves']
+            # Checks if the direction is in the valid moves dictionary and check if it is true
+            if direction in valid_moves and valid_moves[direction]:
                 return True
             else:
                 return False
-        except:
+        except KeyError:
             print("Wrong direction input")
             return False
+        # try:
+        #     if self.current_room['valid_moves'][direction]:
+        #         print(self.current_room['valid_moves'][direction])
+        #         return True
+        #     else:
+        #         return False
+        # except:
+        #     print("Wrong direction input")
+        #     return False
+
+    def set_current_room(self, room):
+        """Sets the current room"""
+        self.current_room = room
 
     def get_next_room(self):
         """moves linear to next room if right direction chosen"""
