@@ -1,0 +1,104 @@
+{
+  "objects": {
+    "cast": {
+      "name": "Mutated Pig's Footprint Cast",
+      "description": "a plaster cast of an unusual pig footprint.",
+      "effect": "Triggers dialogue with scientist to propel plot.",
+      "equipped": false,
+      "verbs": ["use", "examine", "show"],
+      "spawnLocation": "Room_2",
+      "spawnRoom": "Abandoned Laboratory",
+      "interaction": "There seems to be a plaster cast of an unusual pig footprint. Triggers dialogue with scientist to propel plot..."
+    },
+    "torchlight": {
+      "name": "UV Torchlight",
+      "description": "a torchlight that emits ultraviolet light.",
+      "effect": "Reveals hidden messages and mutant pig tracks.",
+      "equipped": false,
+      "verbs": ["use", "examine", "turn on", "turn off"],
+      "spawnLocation": "Room_1",
+      "spawnRoom": "Village Hut",
+      "interaction": "There seems to be a torchlight that emits ultraviolet light. It might reveal hidden messages and mutant pig tracks..."
+    },
+    "cell": {
+      "name": "Power Cell",
+      "description": "a peculiar energy source with glowing blue energy.",
+      "effect": "Powers up Resistance devices for research and planning.",
+      "equipped": false,
+      "verbs": ["use", "examine", "insert"],
+      "spawnLocation": "Room_6",
+      "spawnRoom": "Reactor Tunnels",
+      "interaction": "There seems to be a peculiar energy source with glowing blue energy. This will power up some Resistance devices..."
+    },
+    "communicator": {
+      "name": "Resistance Communicator",
+      "description": "a handheld device for communicating with the resistance base.",
+      "effect": "Maintains contact with base and intercepts pig mutant communications when upgraded.",
+      "equipped": false,
+      "verbs": ["use", "examine", "turn on", "turn off", "upgrade"],
+      "spawnLocation": "Room_3",
+      "spawnRoom": "Ancient Temple",
+      "interaction": "There seems to be a handheld device for communicating with the resistance base. Now you can maintain contact with base and intercept pig mutant communications..."
+    },
+    "sample": {
+      "name": "Mutagen Sample",
+      "description": "a glowing substance collected from the reactor site.",
+      "effect": "Provides proof of the power source and aids in devising sabotage plan.",
+      "equipped": false,
+      "verbs": ["use", "examine", "show"],
+      "spawnLocation": "Room_9",
+      "spawnRoom": "Throne Room",
+      "interaction": "There seems to be a glowing substance collected from the reactor site. This will give you proof of the power source and aid in devising sabotage plan against the Mutant Pigs..."
+    },
+    "blueprints": {
+      "name": "Reactor Blueprints",
+      "description": "Detailed schematics of the reactor's layout and weaknesses.",
+      "effect": "Provides crucial information for infiltrating and sabotaging the reactor.",
+      "equipped": false,
+      "verbs": ["use", "examine", "study"],
+      "spawnLocation": "Room_5",
+      "spawnRoom": "Resistance Hideout",
+      "interaction": "There seems to be detailed schematics of the reactor's layout and weaknesses. It provides crucial information for infiltrating and sabotaging the reactor..."
+    },
+    "cutter": {
+      "name": "Plasma Cutter",
+      "description": "a powerful tool that can cut through doors or fences.",
+      "effect": "Provides access to new areas and can be used as a makeshift weapon.",
+      "equipped": false,
+      "verbs": ["use", "examine", "cut"],
+      "spawnLocation": "Room_7",
+      "spawnRoom": "Torture Chamber",
+      "interaction": "There seems to be a powerful tool that can cut through doors or fences. It gives you access to new areas and can be used as a makeshift weapon..."
+    },
+    "shield": {
+      "name": "Laser Shield",
+      "description": "a high-tech device that absorbs energy from laser attacks.",
+      "effect": "Protects player from harm during the final showdown.",
+      "equipped": false,
+      "verbs": ["use", "examine", "activate", "deactivate"],
+      "spawnLocation": "Room_4",
+      "spawnRoom": "Hidden Crypt",
+      "interaction": "There seems to be a high-tech device that absorbs energy from laser attacks. This will protect you from harm during any major battle..."
+    },
+    "message": {
+      "name": "Coded Message",
+      "description": "a cryptic message hinting at the location and weaknesses of the stronghold.",
+      "effect": "Must be deciphered back at the resistance base.",
+      "equipped": false,
+      "verbs": ["use", "examine", "decipher"],
+      "spawnLocation": "Room_8",
+      "spawnRoom": "Pig Mutant Stronghold",
+      "interaction": "There seems to be a cryptic message on a crumpled paper. It must be deciphered back at the resistance base..."
+    },
+    "crown": {
+      "name": "Mutant King's Crown",
+      "description": "The crown of the defeated Pig Mutant King.",
+      "effect": "Symbolizes player's victory and can be put on display during the epilogue.",
+      "equipped": false,
+      "verbs": ["use", "examine", "display"],
+      "spawnLocation": "Room_10",
+      "spawnRoom": "Victory Celebration",
+      "interaction": "The defeated Pig Mutant King has dropped his crown. You wonder what it would look like on you..."
+    }
+  }
+}

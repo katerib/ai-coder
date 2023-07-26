@@ -14,6 +14,8 @@ class Map:
         for room in self.map_data['maps']:
             # print(self.map_data['maps'][room])
             self.room_list.append(self.map_data['maps'][room])
+            self.map_data['maps'][room]['isPresent'] = True
+
         # print(len(self.room_list))
         self.room_count = 0
 

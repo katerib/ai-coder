@@ -9,18 +9,13 @@ class CommandParser:
         nlp = spacy.load("en_core_web_sm")
         doc = nlp(command)
         prepositions = [token.text for token in doc if token.pos_ == "ADP"]
-        # if prepositions:
-        #     print(f"found preposition! {prepositions}")
         return prepositions
 
     @staticmethod
     def parse_command(command):
-        """
-        Parse the user command and identify the verb and object. Calls identify_preposition using spaCy.
-        """
-        verbs = ["move", "take", "use", "quit", "hit", "pull", "go", "eat", "look", "look at", "inventory",
+        verbs = ["move", "take", "use", "quit", "hit", "pull", "glance", "glance at", "go", "eat", "look", "inventory",
                  "examine", "show", "turn on", "turn off", "insert", "upgrade", "study", "cut", "activate", "deactivate",
-                 "decipher", "display", "help", "drop"]
+                 "decipher", "display", "help", "drop", "look at"]
 
         prepositions = CommandParser.identify_prepositions(command)
 
@@ -28,10 +23,25 @@ class CommandParser:
         verb = None
         obj = []
 
-        for word in words:
-            if word in verbs:
+        i = 0
+        while i < len(words):
+            word = words[i]
+            multi_word_verb = None
+            # check for multi-word verb first
+            if i < len(words) - 1:  # ensure there's a next word
+                candidate_verb = f"{word} {words[i + 1]}"
+                if candidate_verb in verbs:
+                    multi_word_verb = candidate_verb
+                    i += 2  # increment i by 2 as we're using two words
+
+            if multi_word_verb:
+                verb = multi_word_verb
+            elif word in verbs:  # if the word is a verb and not part of a multi-word verb
                 verb = word
-            elif word not in prepositions:
-                obj.append(word)
+                i += 1
+            elif verb:  # append to obj only if the verb has been found
+                if word not in prepositions and word not in verbs:
+                    obj.append(word)
+                i += 1
 
         return verb, " ".join(obj)

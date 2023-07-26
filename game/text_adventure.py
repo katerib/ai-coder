@@ -2,7 +2,7 @@ from game.maps import Map
 from game.objects import Objects
 from game.player import Player
 from game.command_parser import CommandParser
-from game.verbs import hit_verb, pull_verb, eat_verb, look_verb, look_at_verb, inventory_verb
+from game.verbs import hit_verb, pull_verb, eat_verb, look_verb, look_at_verb, inventory_verb, glance_verb
 import os
 
 
@@ -10,9 +10,9 @@ class TextAdventureGame:
     MIN_WIDTH = 80          # Minimum terminal width in columns
     MIN_HEIGHT = 24         # Minimum terminal height in lines
 
-    def __init__(self, objects_data):
+    def __init__(self):
         self.map = Map()
-        self.objects = Objects(objects_data["objects"])
+        self.objects = Objects()
         self.player = None
 
     @staticmethod
@@ -62,10 +62,10 @@ class TextAdventureGame:
         item_data = self.player.take_item_from_room(item)
         if item_data:
             self.player.inventory.add_item(item_data, quantity=1)
+            self.player.current_room["isPresent"] = False            
             print(f"You picked up {item_data}")
         else:
             print("There is no such item in this room.")
-
 
     def use_item(self, item):
         # Get the item data from the Objects class based on the item name
@@ -97,7 +97,7 @@ class TextAdventureGame:
             self.take_item(obj)
         elif verb == "use":
             self.use_item(obj)
-        elif verb == "quit":
+        elif verb == "quit" or verb == "exit":
             exit()
         elif verb == "hit":
             hit_verb(obj)
@@ -108,9 +108,13 @@ class TextAdventureGame:
         elif verb == "eat":
             eat_verb(obj)
         elif verb == "look":
-            look_verb(self.player.current_room["description"])
+            look_verb(self.player.current_room)
+        elif verb == "glance":
+            glance_verb(self.player.current_room, self.player.inventory, self.objects, obj)
+        elif verb == "glance at":
+            glance_verb(self.player.current_room, self.player.inventory, self.objects, obj)
         elif verb == "look at":
-            look_at_verb(obj)
+            look_at_verb(self.player.current_room, self.player.inventory, self.objects, obj)
         elif verb == "inventory":
             inventory_verb(self.player.inventory)
         elif verb == "help":
@@ -126,17 +130,18 @@ class TextAdventureGame:
         self.create_player()
 
         # # Print valid commands at the start of the game
-        print(f"Welcome to the game {self.player.get_name()}! Type help for a list of commands.")
+        print(f"\nWelcome to the game {self.player.get_name()}! Type help for a list of commands. \nNot sure what to do first? Get started by looking around the room with 'look'.")
 
         while True:
-            print("\n---")
-            print("Current Room:", self.player.current_room["name"])
-            print("Description:", self.player.current_room["description"])
+            # print("Current Room:", self.player.current_room["name"])
+            # print("Description:", self.player.current_room["description"])
+            print("\nWhat will you do next?")
 
             command = input("Enter your command: ").lower()
 
             verb, obj = CommandParser.parse_command(command)
-
+            # print(f"VERB: {verb}, OBJ: {obj}")
+            print("\n")
 
             if not verb:
                 print("Invalid command.")

@@ -35,6 +35,7 @@ class Player:
         for room_item in self.current_room["interactive_items"]:
             if item == room_item.lower():
                 self.current_room["interactive_items"].remove(room_item)
+                self.current_room["isPresent"] = False
                 return room_item
         return None
     
