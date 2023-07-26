@@ -17,25 +17,53 @@ def eat_verb(item_to_eat):
     """
     print(f"You eat the {item_to_eat}.")
 
-def look_verb(room_description):
+def look_verb(room):
     """
-    Handle the "look" verb action.
+    Handle the "look" verb action. Repeats the long form explanation of the room
     """
-    print(room_description)
+    if room["isPresent"] == True:
+        print(f"{room['description']} {room['obj_description']}")
+    else:
+        print(room['description'])
 
-def look_at_verb(obj):
+def glance_verb(room, inventory, objects, obj):
     """
-    Handle the "look at" verb action.
+    Similar to the "look at" verb action, but gives a shorter description of the feature or object. 
     """
-    if obj in self.player.current_room["interactive_items"]:
-        item_description = self.player.current_room["object_interaction"].get(obj)
+    print("You glance around the room.")
+    item_description = objects.get_description(obj)
+
+    if obj in room["interactive_items"]:
         if item_description:
-            print(item_description["description"])
+            print(f"You see {item_description}")
         else:
             print(f"You look at the {obj} but find nothing of interest.")
-    elif obj in self.player.inventory.items:
-        item_data = self.player.inventory.get_item(obj)
-        print(item_data["description"])
+    elif obj in inventory.items:  # Corrected this line
+        print(f"You found the {obj} in your inventory.")
+        if item_description:
+            print(f"You see {item_description}")
+        else:
+            print(f"You look at the {obj} but find nothing of interest.")
+    else:
+        print("You can't look at that.")
+
+def look_at_verb(room, inventory, objects, obj):
+    """
+    Handle the "look at" verb action. Gives a fictionally interesting explanation of the feature or object. 
+    """
+    print("You look around.")
+    item_description = objects.get_interaction(obj)
+    if obj in room["interactive_items"]:
+        if item_description:
+            print(item_description)
+        else:
+            print(f"You look at the {obj} but find nothing of interest.")
+    elif obj in inventory.items:  # Corrected this line
+        print(f"You found the {obj} in your inventory.")
+        if item_description:
+            print(item_description)
+        else:
+            print(f"You look at the {obj} but find nothing of interest.")
     else:
         print("You can't look at that.")
 

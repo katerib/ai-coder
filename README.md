@@ -20,6 +20,7 @@ Make sure you have Python 3 installed on your system.
 2. Create your own virtual environment: `python3 -m venv env`
 3. Run your own virtual environment: `source env/bin/activate`
 4. Install the required dependencies: `pip install -r requirements.txt`
+    python -m spacy download en_core_web_sm
 5. Run the game: `python main.py`
 
 Please note that this is a terminal and text-based game.
