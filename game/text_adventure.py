@@ -3,7 +3,6 @@ from game.objects import Objects
 from game.player import Player
 from game.command_parser import CommandParser
 from game.verbs import hit_verb, pull_verb, eat_verb, look_verb, look_at_verb, inventory_verb
-from game.prepositions import PREPOSITIONS
 import os
 
 
@@ -33,11 +32,7 @@ class TextAdventureGame:
         print("- look at (to look at something)")
         print("- inventory (to view your inventory)")
         print("- quit (to exit the game)")
-        # Add more commands as needed
 
-        # Not sure if we should show this? OR maybe add to the help command.
-        # print("\nPrepositions:")
-        # print(", ".join(PREPOSITIONS))
 
     @staticmethod
     def check_terminal_size():
@@ -140,8 +135,8 @@ class TextAdventureGame:
 
             command = input("Enter your command: ").lower()
 
-            verb, obj = CommandParser.parse_command(
-                command, PREPOSITIONS)
+            verb, obj = CommandParser.parse_command(command)
+
 
             if not verb:
                 print("Invalid command.")
