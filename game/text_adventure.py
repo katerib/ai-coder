@@ -2,7 +2,7 @@ from game.maps import Map
 from game.objects import Objects
 from game.player import Player
 from game.command_parser import CommandParser
-from game.verbs import hit_verb, pull_verb, eat_verb, look_verb, look_at_verb, inventory_verb, glance_verb
+from game.verbs import hit_verb, pull_verb, look_verb, look_at_verb, inventory_verb, glance_verb, read_verb
 import os
 
 
@@ -105,8 +105,8 @@ class TextAdventureGame:
             pull_verb(obj)
         elif verb == "go":
             self.move_player(obj)
-        elif verb == "eat":
-            eat_verb(obj)
+        elif verb == "read":
+            read_verb(obj)
         elif verb == "look":
             look_verb(self.player.current_room)
         elif verb == "glance":

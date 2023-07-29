@@ -11,11 +11,11 @@ def pull_verb(object_to_pull):
     """
     print(f"You pull the {object_to_pull}.")
 
-def eat_verb(item_to_eat):
+def read_verb(object_to_read):
     """
-    Handle the "eat" verb action.
+    Handle the "read" verb action.
     """
-    print(f"You eat the {item_to_eat}.")
+    print(f"You read the {object_to_read}.")
 
 def look_verb(room):
     """
