@@ -3,12 +3,12 @@
     "cast": {
       "name": "Mutated Pig's Footprint Cast",
       "description": "a plaster cast of an unusual pig footprint.",
-      "effect": "Triggers dialogue with scientist to propel plot.",
+      "effect": "'Intriguing,' remarks the scientist, his eyes sparkling with curiosity, 'This could very well change everything we know about the species. Let's delve deeper.'",
       "equipped": false,
       "verbs": ["use", "examine", "show"],
       "spawnLocation": "Room_2",
       "spawnRoom": "Abandoned Laboratory",
-      "interaction": "There seems to be a plaster cast of an unusual pig footprint. Triggers dialogue with scientist to propel plot..."
+      "interaction": "There seems to be a plaster cast of an unusual pig footprint. 'Intriguing,' remarks the scientist, his eyes sparkling with curiosity, 'This could very well change everything we know about the species. Let's delve deeper.'"
     },
     "torchlight": {
       "name": "UV Torchlight",

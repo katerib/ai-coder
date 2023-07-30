@@ -9,6 +9,21 @@ class Player:
         self.objects = objects
         self.inventory = Inventory()  # Initialize an empty inventory for the player
 
+    def serialize(self):
+        return {
+            "name": self.name,
+            "current_room": self.current_room["name"],
+            "inventory": self.inventory.serialize(),
+            "map": self.map.serialize(),
+        }
+    
+    @classmethod
+    def deserialize(cls, data, map_obj, objects_obj):
+        player = cls(data["name"], None, map_obj, objects_obj)
+        player.current_room = map_obj.get_room_by_name(data["current_room"])
+        player.inventory.deserialize(data["inventory"])
+        return player
+
     def get_name(self):
         return self.name
 
@@ -39,9 +54,17 @@ class Player:
                 print(f"You move to {self.current_room['name']}")
                 return
             else:
-                print("You can't go that way.")
+                print("You can't go that way. Try another way: north, south, east, or west.")
 
         return
+    
+    def get_interactive_items_descriptions(self):
+        descriptions = []
+        for item_name in self.current_room["interactive_items"]:
+            description = self.objects.get_description(item_name)
+            descriptions.append(description)
+        return descriptions
+
 
     def take_item_from_room(self, item):
         item = item.lower()
@@ -53,17 +76,20 @@ class Player:
                 self.current_room["isPresent"] = False
                 return room_item
         return None
+    
+    
+    def add_item_to_room(self, item):
+        self.current_room["interactive_items"].append(item)
+        self.objects.set_object_presence(item, True)
+        print(f"You've added the {item} to the room.")
+
 
     def drop_item(self, item):
         item_data = self.objects.get_object(item)
 
         inventory_item = self.inventory.get_item(item)
         if inventory_item:
-            # if item_data["equipped"]:
-            #     # Mark the item as not equipped if equipped
-            #     self.objects.mark_item_as_not_equipped(item)
-            # Add the item to the room and remove from inventory
-            self.current_room["interactive_items"].append(item)
+            self.add_item_to_room(item)
             self.inventory.remove_item(item)
             print(f"You dropped the {item}.")
         else:

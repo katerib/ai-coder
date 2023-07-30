@@ -6,6 +6,12 @@ class Objects:
             data = json.load(file)
         self.objects = data['objects']
 
+    def serialize(self):
+        return {"objects": self.objects}
+
+    def deserialize(self, data):
+        self.objects = data["objects"]
+
     def get_description(self, object_name):
         """Returns the description of the specified object"""
         object_data = self.get_object(object_name)
@@ -24,4 +30,15 @@ class Objects:
 
     def get_object(self, object_name):
         """Returns the object data based on the given object name"""
-        return self.objects.get(object_name)
+        for obj_key in self.objects:
+            obj = self.objects[obj_key]
+            if obj['name'].lower() == object_name.lower():
+                return obj
+        return None
+
+    
+    def set_object_presence(self, item_name, is_present):
+        item = self.get_object(item_name)
+
+        if item:
+            item["isPresent"] = is_present
