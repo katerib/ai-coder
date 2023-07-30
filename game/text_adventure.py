@@ -27,7 +27,7 @@ class TextAdventureGame:
         print("- hit (to hit something)")
         print("- pull (to pull something)")
         print("- go (to navigate between rooms)")
-        print("- eat (to eat something)")
+        print("- read (to read something)")
         print("- look (to look around the room)")
         print("- look at (to look at something)")
         print("- inventory (to view your inventory)")
@@ -81,10 +81,11 @@ class TextAdventureGame:
                     # Item is already equipped, print a message to inform the player
                     print(f"The {item_name} is already equipped.")
                 else:
+                    pass
                     # Mark the item as equipped in the objects JSON
-                    self.objects.mark_item_as_equipped(item)
+                    # self.objects.mark_item_as_equipped(item)
                     # Print out the effect of using the item
-                    self.objects.handle_item_effect(item_data)
+                    # self.objects.handle_item_effect(item_data)
             else:
                 print("You don't have that item in your inventory.")
         else:
@@ -100,13 +101,13 @@ class TextAdventureGame:
         elif verb == "quit" or verb == "exit":
             exit()
         elif verb == "hit":
-            hit_verb(obj)
+            hit_verb(self.player.current_room, obj)
         elif verb == "pull":
-            pull_verb(obj)
+            pull_verb(self.player.current_room, obj)
         elif verb == "go":
             self.move_player(obj)
         elif verb == "read":
-            read_verb(obj)
+            read_verb(self.player.current_room, obj)
         elif verb == "look":
             look_verb(self.player.current_room)
         elif verb == "glance":
@@ -136,10 +137,10 @@ class TextAdventureGame:
             # print("Current Room:", self.player.current_room["name"])
             # print("Description:", self.player.current_room["description"])
             print("\nWhat will you do next?")
-
+            # print(self.map)
             command = input("Enter your command: ").lower()
 
-            verb, obj = CommandParser.parse_command(command)
+            verb, obj = CommandParser.parse_command(command, self.map)
             # print(f"VERB: {verb}, OBJ: {obj}")
             print("\n")
 

@@ -12,20 +12,36 @@ class Player:
     def get_name(self):
         return self.name
 
-    def move(self, direction):
-        if self.map.is_move_valid(direction):
-        # if direction in self.current_room["valid_moves"] and self.map.is_move_valid(direction):
-            if len(self.current_room["interactive_items"]) >= 1:
-                print("You need to find more items")
-                return
-            # print(self.current_room["interactive_items"])
-            next_room_name = self.map.get_next_room()
-            self.current_room = next_room_name
-            self.map.set_current_room(self.current_room)
-            # self.current_room = self.map.get_room(next_room_name)
-            print(f"You move to {self.current_room['name']}")
+    def move(self, destination):
+        if destination in self.map.get_room_names():
+            # Check if destination is a valid room name
+            for room_key, room_data in self.map.map_data.items():
+                if room_data["name"].lower() == destination.lower():
+                    self.current_room = room_data
+                    self.map.set_current_room(self.current_room)
+                    print(f"You move to {self.current_room['name']}.")
+                    return                      
+            print(f"{destination} is not a valid room.")
+
         else:
-            print("You can't go that way.")
+            direction = destination
+
+            if self.map.is_move_valid(direction):
+                if len(self.current_room["interactive_items"]) >= 1:
+                    print("You need to find more items")
+                    return
+
+                next_room = self.map.get_next_room()
+                if next_room:
+                    self.current_room = next_room
+                    self.map.set_current_room(self.current_room)
+                    print(f"You move to {self.current_room['name']}")
+                else:
+                    print(
+                        "You are already at the last room. Cannot go further. Pull the victory bell for a message!")
+            else:
+                print("You can't go that way.")
+
         return
 
     def take_item_from_room(self, item):
@@ -38,20 +54,18 @@ class Player:
                 self.current_room["isPresent"] = False
                 return room_item
         return None
-    
- 
+
     def drop_item(self, item):
         item_data = self.objects.get_object(item)
-        
+
         inventory_item = self.inventory.get_item(item)
         if inventory_item:
-            if item_data["equipped"]:
-                # Mark the item as not equipped if equipped
-                self.objects.mark_item_as_not_equipped(item)
+            # if item_data["equipped"]:
+            #     # Mark the item as not equipped if equipped
+            #     self.objects.mark_item_as_not_equipped(item)
             # Add the item to the room and remove from inventory
             self.current_room["interactive_items"].append(item)
             self.inventory.remove_item(item)
             print(f"You dropped the {item}.")
         else:
             print("You don't have that item in your inventory.")
-

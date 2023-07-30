@@ -1,28 +1,37 @@
 # verbs.py
-def hit_verb(target):
+def hit_verb(map, target):
     """
     Handle the "hit" verb action.
     """
-    print(f"You hit {target}.")
+    if target in map['feature_item'] and map['action_verb'] == 'hit':
+        print(map['feature_item'][target])
+    else:
+        print(f"You can't hit that.")
 
-def pull_verb(object_to_pull):
+def pull_verb(map, object_to_pull):
     """
     Handle the "pull" verb action.
     """
-    print(f"You pull the {object_to_pull}.")
+    if object_to_pull in map['feature_item'] and map['action_verb'] == 'pull':
+        print(map['feature_item'][object_to_pull])
+    else:
+        print(f"You can't pull that.")
 
-def read_verb(object_to_read):
+def read_verb(map, object_to_read):
     """
     Handle the "read" verb action.
     """
-    print(f"You read the {object_to_read}.")
+    if object_to_read in map['feature_item'] and map['action_verb'] == 'read':
+        print(map['feature_item'][object_to_read])
+    else:
+        print(f"There is nothing to read.")
 
 def look_verb(room):
     """
     Handle the "look" verb action. Repeats the long form explanation of the room
     """
     if room["isPresent"] == True:
-        print(f"{room['description']} {room['obj_description']}")
+        print(f"{room['description']} \n\n{room['obj_description']}")
     else:
         print(room['description'])
 

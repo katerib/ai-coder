@@ -1,26 +1,14 @@
 import json
-import os.path
 
 
 class Map:
     def __init__(self):
-        self.json_file_name = "data/maps.json"
-        self.json_file_name = os.path.normpath(self.json_file_name)
+        with open("data/maps.json", 'r') as file:
+            data = json.load(file)
 
-        with open(self.json_file_name, 'r') as data:
-            self.map_data = json.load(data)
-
-        self.room_list = []
-        for room in self.map_data['maps']:
-            # print(self.map_data['maps'][room])
-            self.room_list.append(self.map_data['maps'][room])
-            self.map_data['maps'][room]['isPresent'] = True
-
-        # print(len(self.room_list))
+        self.map_data = data["maps"]
         self.room_count = 0
-
-        # Set up detail variables and initialize first map room
-        self.current_room = self.room_list[0].copy()
+        self.current_room = self.map_data[list(self.map_data.keys())[0]]
 
     def get_current_room(self):
         return self.current_room
@@ -37,15 +25,6 @@ class Map:
         except KeyError:
             print("Wrong direction input")
             return False
-        # try:
-        #     if self.current_room['valid_moves'][direction]:
-        #         print(self.current_room['valid_moves'][direction])
-        #         return True
-        #     else:
-        #         return False
-        # except:
-        #     print("Wrong direction input")
-        #     return False
 
     def set_current_room(self, room):
         """Sets the current room"""
@@ -53,34 +32,15 @@ class Map:
 
     def get_next_room(self):
         """moves linear to next room if right direction chosen"""
-        if self.room_count == 9:
-            print("Game is over")
+        room_keys = list(self.map_data.keys())
+        if self.room_count >= len(room_keys) - 1:
             return False
 
         self.room_count += 1
-        return self.room_list[self.room_count]
+        next_room_key = room_keys[self.room_count]
+        return self.map_data[next_room_key]
 
-    def get_room(self, roomname):
-        print(self.current_room)
-        return self.map_data['maps'][roomname]
+    def get_room_names(self):
+        """Returns a list of room names"""
+        return [self.map_data[room_key]["name"].lower() for room_key in self.map_data]
 
-    def get_last_room(self):
-        return self.last_room
-
-    def get_valid_travel_directions(self):
-        return self.current_room['valid_moves']
-
-    def add_object(self, object_to_add):
-        """Adds object to self.map_data and current room data"""
-        try:
-            self.current_room['object_interaction'][object_to_add]['obtained'] = True
-            return True
-        except KeyError:
-            return False
-
-    def is_object_obtained(self, object_to_check):
-        """Checks if an object has been obtained"""
-        try:
-            return self.current_room['object_interaction'][object_to_check]['obtained']
-        except KeyError:
-            return False
