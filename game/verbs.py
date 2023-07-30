@@ -37,49 +37,60 @@ def look_verb(room):
 
 def glance_verb(room, inventory, objects, obj):
     """
-    Similar to the "look at" verb action, but gives a shorter description of the feature or object. 
+    Similar to the "look at" verb action, but gives a shorter description of the feature or object.
     """
     print("You glance around the room.")
     item_description = objects.get_description(obj)
 
-    if obj in room["interactive_items"]:
+    if any(item.lower() == obj.lower() for item in inventory.items):
+        if item_description:
+            print(f"You're holding {item_description}")
+        else:
+            print(f"You look at the {obj} but find nothing of interest.")
+    elif any(item.lower() == obj.lower() for item in room["interactive_items"]):
         if item_description:
             print(f"You see {item_description}")
         else:
             print(f"You look at the {obj} but find nothing of interest.")
-    elif obj in inventory.items:  # Corrected this line
-        print(f"You found the {obj} in your inventory.")
-        if item_description:
-            print(f"You see {item_description}")
-        else:
-            print(f"You look at the {obj} but find nothing of interest.")
+
     else:
         print("You can't look at that.")
 
+
 def look_at_verb(room, inventory, objects, obj):
     """
-    Handle the "look at" verb action. Gives a fictionally interesting explanation of the feature or object. 
+    Handle the "look at" verb action. Gives a fictionally interesting explanation of the feature or object.
     """
-    print("You look around.")
+    print(f"You look at the {obj}.")
     item_description = objects.get_interaction(obj)
-    if obj in room["interactive_items"]:
-        if item_description:
-            print(item_description)
+
+
+    if any(item.lower() == obj.lower() for item in inventory.items):
+        obj_in_inventory = next((item for item in inventory.items if item.lower() == obj.lower()), None)
+        if obj_in_inventory:
+            print(f"You found the {obj_in_inventory} in your inventory.")
+            if item_description:
+                print(f"You see {item_description}")
+            else:
+                print(f"You look at the {obj_in_inventory} but find nothing of interest.")
         else:
-            print(f"You look at the {obj} but find nothing of interest.")
-    elif obj in inventory.items:  # Corrected this line
-        print(f"You found the {obj} in your inventory.")
+            print(f"You don't see the {obj} here or in your inventory.")
+    elif any(item.lower() == obj.lower() for item in room["interactive_items"]):
         if item_description:
             print(item_description)
         else:
             print(f"You look at the {obj} but find nothing of interest.")
     else:
-        print("You can't look at that.")
+        print(f"You don't see the {obj} here or in your inventory.")
+
 
 def inventory_verb(inventory):
     """
     Handle the "inventory" verb action.
     """
-    print("Inventory:")
-    for item, quantity in inventory.view_inventory().items():
-        print(f"- {item}: {quantity}")
+    if len(inventory.view_inventory()) == 0:
+        print("It looks like you don't have anything in your inventory.")
+    else:
+        print("Inventory:")
+        for item, quantity in inventory.view_inventory().items():
+            print(f"- {item}: {quantity}")

@@ -4,16 +4,19 @@ from game.player import Player
 from game.command_parser import CommandParser
 from game.verbs import hit_verb, pull_verb, look_verb, look_at_verb, inventory_verb, glance_verb, read_verb
 import os
+import json
 
 
 class TextAdventureGame:
-    MIN_WIDTH = 80          # Minimum terminal width in columns
-    MIN_HEIGHT = 24         # Minimum terminal height in lines
+    MIN_WIDTH = 80
+    MIN_HEIGHT = 24
+    
+    SAVE_FILE = "backup/save_data.json"
 
     def __init__(self):
         self.map = Map()
         self.objects = Objects()
-        self.player = None
+        self.create_player()
 
     @staticmethod
     def help_command():
@@ -41,7 +44,6 @@ class TextAdventureGame:
         Static method to check the terminal size. If the terminal size is too small, the game will not be playable.
         Terminal size should be checked throughout gameplay, likely before each command is entered.
         """
-
         size = os.get_terminal_size()
         if size.lines < TextAdventureGame.MIN_HEIGHT or size.columns < TextAdventureGame.MIN_WIDTH:
             print(
@@ -51,7 +53,82 @@ class TextAdventureGame:
             print("Please resize your terminal and start the game again.\n")
             exit()
 
+    def save_game(self):
+        """
+        Method to save the game state to a JSON file with the fixed filename "save_data.json".
+        """
+        game_state = {
+            "player": self.player.serialize(),
+            "map": self.map.serialize(),
+            "objects": self.objects.serialize(),
+        }
+
+        # Update the isPresent attribute for each room based on the items in the player's inventory
+        for room in self.map.map_data.values():
+            for item in room["interactive_items"]:
+                item_present_in_inventory = item.lower() in self.player.inventory.items
+                room["isPresent"] = not item_present_in_inventory
+
+        backup_directory = os.path.dirname(TextAdventureGame.SAVE_FILE)
+        os.makedirs(backup_directory, exist_ok=True)
+
+        with open(TextAdventureGame.SAVE_FILE, "w") as file:
+            json.dump(game_state, file)
+
+    def load_game(self):
+        """
+        Method to load the game state from the JSON file with the fixed filename "load_data.json".
+        """
+        if os.path.exists(TextAdventureGame.SAVE_FILE):
+            with open(TextAdventureGame.SAVE_FILE, "r") as file:
+                game_state = json.load(file)
+
+            self.map.deserialize(game_state["map"])
+            self.objects.deserialize(game_state["objects"])
+            self.player = Player.deserialize(
+                game_state["player"], self.map, self.objects
+            )
+
+            # Update the isPresent attribute for each room based on the items in the player's inventory
+            for room in self.map.map_data.values():
+                for item in room["interactive_items"]:
+                    item_present_in_inventory = item.lower() in self.player.inventory.items
+                    room["isPresent"] = not item_present_in_inventory
+            return True
+        else:
+            return False
+
+    def reset_game(self, exit_game=False):
+        """
+        Method to reset the game state.
+        """
+        self.map = Map()
+        self.objects = Objects()
+        self.create_player()  # Create a new player when game is reset
+        
+        if exit_game:
+            print("Game has been reset and will now exit.")
+            exit()
+        else:
+            print("Game has been reset.")
+
+
+    def reset_backups(self, exit_after_reset=False):
+        """
+        Method to delete the saved_data.json file.
+        """
+        if os.path.exists(TextAdventureGame.SAVE_FILE):
+            os.remove(TextAdventureGame.SAVE_FILE)
+            print("All saved data has been deleted.")
+            self.reset_game(exit_after_reset)
+        else:
+            print("No saved data found to delete.")
+
+
     def create_player(self):
+        """
+        Method to create a new player.
+        """
         name = input("Enter your name: ")
         starting_room = self.map.get_current_room()
         self.player = Player(name, starting_room, self.map, self.objects)
@@ -67,6 +144,7 @@ class TextAdventureGame:
             print(f"You picked up {item_data}")
         else:
             print("There is no such item in this room.")
+
 
     def use_item(self, item):
         # Get the item data from the Objects class based on the item name
@@ -127,27 +205,34 @@ class TextAdventureGame:
             self.help_command()
         elif verb == "drop":
             self.player.drop_item(obj)
+        elif verb == "save":
+            self.save_game()
+            print(f"Game saved to {TextAdventureGame.SAVE_FILE} successfully.")
+        elif verb == "load":
+            check = self.load_game()
+            if check:
+                print(f"Game loaded successfully.")
+            else:
+                print("No saved game data found.")
+        elif verb == "reset backups":
+            self.reset_backups()
         else:
             print("Invalid command.")
 
     def play(self):
-        # commented out for testing
-        # self.check_terminal_size()
-        self.create_player()
+        self.check_terminal_size()
 
-        # # Print valid commands at the start of the game
         print(
             f"\nWelcome to the game {self.player.get_name()}! Type help for a list of commands. \nNot sure what to do first? Get started by looking around the room with 'look'.")
 
         while True:
-            # print("Current Room:", self.player.current_room["name"])
-            # print("Description:", self.player.current_room["description"])
+            self.check_terminal_size()  
+
             print("\nWhat will you do next?")
 
             command = input("Enter your command: ").lower()
 
             verb, obj = CommandParser.parse_command(command, self.map)
-            # print(f"VERB: {verb}, OBJ: {obj}")
             print("\n")
 
             if not verb:

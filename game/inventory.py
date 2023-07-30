@@ -2,6 +2,12 @@ class Inventory:
     def __init__(self):
         self.items = {}
 
+    def serialize(self):
+        return {"items": self.items}
+
+    def deserialize(self, data):
+        self.items = data["items"]
+
     def get_item(self, item_name):
         return self.items.get(item_name)
 
