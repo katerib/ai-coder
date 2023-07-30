@@ -1,5 +1,6 @@
 import spacy
 
+
 class CommandParser:
     @staticmethod
     def identify_prepositions(command):
@@ -12,36 +13,49 @@ class CommandParser:
         return prepositions
 
     @staticmethod
-    def parse_command(command):
+    def parse_command(command, map):
         verbs = ["move", "take", "use", "quit", "hit", "pull", "glance", "glance at", "go", "eat", "look", "inventory",
                  "examine", "show", "turn on", "turn off", "insert", "upgrade", "study", "cut", "activate", "deactivate",
-                 "decipher", "display", "help", "drop", "look at"]
+                 "decipher", "display", "help", "drop", "look at", "read"]
 
         prepositions = CommandParser.identify_prepositions(command)
 
-        words = command.split()
-        verb = None
-        obj = []
+        if "go " in command:
+            # Player used "go room_name" syntax
+            verb = "go"
+            room_name = command.split("go ", 1)[1]
+            return verb, room_name.strip()
+        elif command.lower() in map.get_room_names():
+            # Player just typed the room name directly
+            return "move", command.lower()
 
-        i = 0
-        while i < len(words):
-            word = words[i]
-            multi_word_verb = None
-            # check for multi-word verb first
-            if i < len(words) - 1:  # ensure there's a next word
-                candidate_verb = f"{word} {words[i + 1]}"
-                if candidate_verb in verbs:
-                    multi_word_verb = candidate_verb
-                    i += 2  # increment i by 2 as we're using two words
+        elif command.lower() in ["north", "south", "east", "west"]:
+            # Player used single-word direction
+            return "move", command.lower()
+        else:
+            words = command.split()
+            verb = None
+            obj = []
 
-            if multi_word_verb:
-                verb = multi_word_verb
-            elif word in verbs:  # if the word is a verb and not part of a multi-word verb
-                verb = word
-                i += 1
-            elif verb:  # append to obj only if the verb has been found
-                if word not in prepositions and word not in verbs:
-                    obj.append(word)
-                i += 1
+            i = 0
+            while i < len(words):
+                word = words[i]
+                multi_word_verb = None
+                # check for multi-word verb first
+                if i < len(words) - 1:  # ensure there's a next word
+                    candidate_verb = f"{word} {words[i + 1]}"
+                    if candidate_verb in verbs:
+                        multi_word_verb = candidate_verb
+                        i += 2  # increment i by 2 as we're using two words
 
-        return verb, " ".join(obj)
+                if multi_word_verb:
+                    verb = multi_word_verb
+                elif word in verbs:  # if the word is a verb and not part of a multi-word verb
+                    verb = word
+                    i += 1
+                elif verb:  # append to obj only if the verb has been found
+                    if word not in prepositions and word not in verbs:
+                        obj.append(word)
+                    i += 1
+
+            return verb, " ".join(obj)
