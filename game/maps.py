@@ -7,7 +7,7 @@ class Map:
             data = json.load(file)
 
         self.map_data = data["maps"]
-        self.room_count = 0
+        self.room_count = 1
         self.current_room = self.map_data[list(self.map_data.keys())[0]]
 
     def get_current_room(self):
@@ -33,14 +33,17 @@ class Map:
     def get_next_room(self):
         """moves linear to next room if right direction chosen"""
         room_keys = list(self.map_data.keys())
-        if self.room_count >= len(room_keys) - 1:
+        if self.room_count > len(room_keys) - 1:
+            print(
+                "You are already at the last room. Cannot go further. Pull the victory bell for a message!")
             return False
 
-        self.room_count += 1
-        next_room_key = room_keys[self.room_count]
-        return self.map_data[next_room_key]
+        return self.map_data[room_keys[self.room_count]]
 
     def get_room_names(self):
         """Returns a list of room names"""
         return [self.map_data[room_key]["name"].lower() for room_key in self.map_data]
 
+    def increment_room_count(self):
+        """Increments the room count"""
+        self.room_count += 1

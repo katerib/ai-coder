@@ -31,8 +31,9 @@ class TextAdventureGame:
         print("- look (to look around the room)")
         print("- look at (to look at something)")
         print("- inventory (to view your inventory)")
-        print("- quit (to exit the game)")
-
+        print("- quit or exit (to exit the game)")
+        
+        print("Not all commands are shown here. Try to think of other commands that might work! \n")
 
     @staticmethod
     def check_terminal_size():
@@ -62,7 +63,7 @@ class TextAdventureGame:
         item_data = self.player.take_item_from_room(item)
         if item_data:
             self.player.inventory.add_item(item_data, quantity=1)
-            self.player.current_room["isPresent"] = False            
+            self.player.current_room["isPresent"] = False
             print(f"You picked up {item_data}")
         else:
             print("There is no such item in this room.")
@@ -92,30 +93,34 @@ class TextAdventureGame:
             print("Item not found.")
 
     def handle_command(self, verb, obj):
-        if verb == "move":
+        if verb == "move" or verb == 'go':
             self.move_player(obj)
-        elif verb == "take":
+        elif verb == "take" or verb == "pick up" or verb == "grab":
             self.take_item(obj)
-        elif verb == "use":
+        elif verb == "use" or verb == "examine" or verb == "show" or \
+                verb == "turn on" or verb == "turn off" or verb == "insert" or verb == "upgrade" \
+                or verb == "cut" or verb == "activate" or verb == "deactivate" or verb == "display" or \
+                verb == "study" or verb == "decipher" or verb == "upgrade":
             self.use_item(obj)
         elif verb == "quit" or verb == "exit":
             exit()
-        elif verb == "hit":
+        elif verb == "hit" or verb == "strike" or verb == "push" or verb == "open":
             hit_verb(self.player.current_room, obj)
-        elif verb == "pull":
+        elif verb == "pull" or verb == "tug" or verb == "yank":
             pull_verb(self.player.current_room, obj)
-        elif verb == "go":
-            self.move_player(obj)
-        elif verb == "read":
+        elif verb == "read" or verb == "analyze":
             read_verb(self.player.current_room, obj)
         elif verb == "look":
             look_verb(self.player.current_room)
         elif verb == "glance":
-            glance_verb(self.player.current_room, self.player.inventory, self.objects, obj)
+            glance_verb(self.player.current_room,
+                        self.player.inventory, self.objects, obj)
         elif verb == "glance at":
-            glance_verb(self.player.current_room, self.player.inventory, self.objects, obj)
+            glance_verb(self.player.current_room,
+                        self.player.inventory, self.objects, obj)
         elif verb == "look at":
-            look_at_verb(self.player.current_room, self.player.inventory, self.objects, obj)
+            look_at_verb(self.player.current_room,
+                         self.player.inventory, self.objects, obj)
         elif verb == "inventory":
             inventory_verb(self.player.inventory)
         elif verb == "help":
@@ -131,13 +136,14 @@ class TextAdventureGame:
         self.create_player()
 
         # # Print valid commands at the start of the game
-        print(f"\nWelcome to the game {self.player.get_name()}! Type help for a list of commands. \nNot sure what to do first? Get started by looking around the room with 'look'.")
+        print(
+            f"\nWelcome to the game {self.player.get_name()}! Type help for a list of commands. \nNot sure what to do first? Get started by looking around the room with 'look'.")
 
         while True:
             # print("Current Room:", self.player.current_room["name"])
             # print("Description:", self.player.current_room["description"])
             print("\nWhat will you do next?")
-            # print(self.map)
+
             command = input("Enter your command: ").lower()
 
             verb, obj = CommandParser.parse_command(command, self.map)
@@ -148,4 +154,3 @@ class TextAdventureGame:
                 print("Invalid command.")
             else:
                 self.handle_command(verb, obj)
-
