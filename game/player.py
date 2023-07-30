@@ -13,32 +13,31 @@ class Player:
         return self.name
 
     def move(self, destination):
-        if destination in self.map.get_room_names():
-            # Check if destination is a valid room name
-            for room_key, room_data in self.map.map_data.items():
-                if room_data["name"].lower() == destination.lower():
-                    self.current_room = room_data
-                    self.map.set_current_room(self.current_room)
-                    print(f"You move to {self.current_room['name']}.")
-                    return                      
-            print(f"{destination} is not a valid room.")
+        # Check if the player has all the items
+        if len(self.current_room["interactive_items"]) >= 1:
+            print("You need to find more items")
+            return
 
-        else:
-            direction = destination
+        # Get the next room to compare with the destination
+        next_room = self.map.get_next_room()
 
-            if self.map.is_move_valid(direction):
-                if len(self.current_room["interactive_items"]) >= 1:
-                    print("You need to find more items")
-                    return
-
-                next_room = self.map.get_next_room()
-                if next_room:
-                    self.current_room = next_room
-                    self.map.set_current_room(self.current_room)
-                    print(f"You move to {self.current_room['name']}")
-                else:
-                    print(
-                        "You are already at the last room. Cannot go further. Pull the victory bell for a message!")
+        # Checks for last condition to prevent moving at the last room
+        if next_room:
+            # Check if command is just room name
+            if destination.lower() == next_room["name"].lower():
+                self.current_room = next_room
+                self.map.set_current_room(self.current_room)
+                self.map.increment_room_count()
+                print(f"You move to {self.current_room['name']}.")
+                return
+            # Check if command is a direction
+            elif self.map.is_move_valid(destination.lower()):
+                # Checks for last condition to prevent moving at the last room
+                self.current_room = next_room
+                self.map.set_current_room(self.current_room)
+                self.map.increment_room_count()
+                print(f"You move to {self.current_room['name']}")
+                return
             else:
                 print("You can't go that way.")
 
