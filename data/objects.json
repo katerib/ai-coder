@@ -52,7 +52,7 @@
     },
     "blueprints": {
       "name": "Reactor Blueprints",
-      "description": "Detailed schematics of the reactor's layout and weaknesses.",
+      "description": "detailed schematics of the reactor's layout and weaknesses.",
       "effect": "Provides crucial information for infiltrating and sabotaging the reactor.",
       "equipped": false,
       "verbs": ["use", "examine", "study"],
@@ -92,7 +92,7 @@
     },
     "crown": {
       "name": "Mutant King's Crown",
-      "description": "The crown of the defeated Pig Mutant King.",
+      "description": "the crown of the defeated Pig Mutant King.",
       "effect": "Symbolizes player's victory and can be put on display during the epilogue.",
       "equipped": false,
       "verbs": ["use", "examine", "display"],

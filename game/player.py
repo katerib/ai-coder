@@ -68,29 +68,25 @@ class Player:
 
     def take_item_from_room(self, item):
         item = item.lower()
-        # looks for item and removes it from player room instance
 
         for room_item in self.current_room["interactive_items"]:
             if item == room_item.lower():
-                self.current_room["interactive_items"].remove(room_item)
-                self.current_room["isPresent"] = False
-                return room_item
+                item_location = self.current_room["interactive_items"].pop(room_item)
+                return room_item, item_location
         return None
     
     
-    def add_item_to_room(self, item):
-        self.current_room["interactive_items"].append(item)
-        self.objects.set_object_presence(item, True)
+    def add_item_to_room(self, item, location):
+        self.current_room["interactive_items"].update({item: location})
+        # self.objects.set_object_presence(item, True)
         print(f"You've added the {item} to the room.")
 
 
     def drop_item(self, item):
-        item_data = self.objects.get_object(item)
-
-        inventory_item = self.inventory.get_item(item)
-        if inventory_item:
-            self.add_item_to_room(item)
-            self.inventory.remove_item(item)
+        inventory_item__value = self.inventory.get_item(item)
+        if inventory_item__value:
+            self.add_item_to_room(item.lower(), inventory_item__value)
+            self.inventory.remove_item(item.lower())
             print(f"You dropped the {item}.")
         else:
             print("You don't have that item in your inventory.")

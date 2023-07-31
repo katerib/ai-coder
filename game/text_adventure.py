@@ -137,11 +137,10 @@ class TextAdventureGame:
         self.player.move(direction.strip())
 
     def take_item(self, item):
-        item_data = self.player.take_item_from_room(item)
-        if item_data:
-            self.player.inventory.add_item(item_data, quantity=1)
-            self.player.current_room["isPresent"] = False
-            print(f"You picked up {item_data}")
+        item_name, item_location = self.player.take_item_from_room(item)
+        if item_name:
+            self.player.inventory.add_item(item_name, item_location)
+            print(f"You picked up {item_name}")
         else:
             print("There is no such item in this room.")
 
@@ -220,13 +219,13 @@ class TextAdventureGame:
             print("Invalid command.")
 
     def play(self):
-        self.check_terminal_size()
+        # self.check_terminal_size()
 
         print(
             f"\nWelcome to the game {self.player.get_name()}! Type help for a list of commands. \nNot sure what to do first? Get started by looking around the room with 'look'.")
 
         while True:
-            self.check_terminal_size()  
+            # self.check_terminal_size()  
 
             print("\nWhat will you do next?")
 

@@ -59,7 +59,7 @@ class Map:
 
         return self.map_data[room_keys[self.room_count]]
 
-    def get_room_names(self):
+    def get_list_of_room_names(self):
         """Returns a list of room names"""
         return [self.map_data[room_key]["name"].lower() for room_key in self.map_data]
 

@@ -30,10 +30,10 @@ def look_verb(room):
     """
     Handle the "look" verb action. Repeats the long form explanation of the room
     """
-    if room["isPresent"] == True:
-        print(f"{room['description']} \n\n{room['obj_description']}")
-    else:
-        print(room['description'])
+    print(f"{room['description']} \n\n")
+    for _, item_location in room['interactive_items'].items():
+        print(f"{item_location} ", end="")
+    print(room['feature_location_description'])
 
 def glance_verb(room, inventory, objects, obj):
     """
@@ -70,7 +70,7 @@ def look_at_verb(room, inventory, objects, obj):
         if obj_in_inventory:
             print(f"You found the {obj_in_inventory} in your inventory.")
             if item_description:
-                print(f"You see {item_description}")
+                print(f"{item_description}")
             else:
                 print(f"You look at the {obj_in_inventory} but find nothing of interest.")
         else:
@@ -92,5 +92,5 @@ def inventory_verb(inventory):
         print("It looks like you don't have anything in your inventory.")
     else:
         print("Inventory:")
-        for item, quantity in inventory.view_inventory().items():
-            print(f"- {item}: {quantity}")
+        for item in inventory.view_inventory().keys():
+            print(f"- {item}: 1")
