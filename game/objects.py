@@ -30,15 +30,14 @@ class Objects:
 
     def get_object(self, object_name):
         """Returns the object data based on the given object name"""
-        for obj_key in self.objects:
-            obj = self.objects[obj_key]
-            if obj['name'].lower() == object_name.lower():
-                return obj
+        for obj_key, obj_value in self.objects.items():
+            if obj_key.lower() == object_name.lower():
+                return obj_value
         return None
 
-    
-    def set_object_presence(self, item_name, is_present):
-        item = self.get_object(item_name)
 
-        if item:
-            item["isPresent"] = is_present
+    # def set_object_presence(self, item_name, is_present):
+    #     item = self.get_object(item_name)
+
+    #     if item:
+    #         item["isPresent"] = is_present

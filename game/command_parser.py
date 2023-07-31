@@ -22,7 +22,7 @@ class CommandParser:
         prepositions = CommandParser.identify_prepositions(command)
 
         # Player typed the room name directly
-        if command.lower() in map.get_room_names():
+        if command.lower() in map.get_list_of_room_names():
             return "move", command.lower()
         # Player used single-word direction
         elif command.lower() in ["north", "south", "east", "west"]:
