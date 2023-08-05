@@ -142,7 +142,7 @@ class TextAdventureGame:
             self.player.inventory.add_item(item_name, item_location)
             print(f"You picked up {item_name}")
         else:
-            print("There is no such item in this room.")
+            print("There is no such item in this room or you can't pick this item up.")
 
 
     def use_item(self, item):
