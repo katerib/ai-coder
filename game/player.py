@@ -16,7 +16,7 @@ class Player:
             "inventory": self.inventory.serialize(),
             "map": self.map.serialize(),
         }
-    
+
     @classmethod
     def deserialize(cls, data, map_obj, objects_obj):
         player = cls(data["name"], None, map_obj, objects_obj)
@@ -54,10 +54,11 @@ class Player:
                 print(f"You move to {self.current_room['name']}")
                 return
             else:
-                print("You can't go that way. Try another way: north, south, east, or west.")
+                print(
+                    "You can't go that way. Try another way: north, south, east, or west.")
 
         return
-    
+
     def get_interactive_items_descriptions(self):
         descriptions = []
         for item_name in self.current_room["interactive_items"]:
@@ -65,22 +66,21 @@ class Player:
             descriptions.append(description)
         return descriptions
 
-
     def take_item_from_room(self, item):
         item = item.lower()
 
         for room_item in self.current_room["interactive_items"]:
             if item == room_item.lower():
-                item_location = self.current_room["interactive_items"].pop(room_item)
+                item_location = self.current_room["interactive_items"].pop(
+                    room_item)
                 return room_item, item_location
-        return None
-    
-    
+        
+        return None, None
+
     def add_item_to_room(self, item, location):
         self.current_room["interactive_items"].update({item: location})
         # self.objects.set_object_presence(item, True)
         print(f"You've added the {item} to the room.")
-
 
     def drop_item(self, item):
         inventory_item__value = self.inventory.get_item(item)

@@ -21,7 +21,7 @@
     "Room_3": {
       "name": "Ancient Temple",
       "interactive_items": {"communicator" : "You see a dirty old communicator lying on the floor that might have significance." },
-      "feature_item": {"ancient inscription": "Upon deciphering its contents, the ancient inscription reveals a labyrinth of cryptic symbols and inscriptions, enticingly providing elusive hints towards uncharted realms within the Ancient Temple and the sacred secrets concealed within the hidden crypt."},
+      "feature_item": {"ancient inscriptions": "Upon deciphering its contents, the ancient inscription reveals a labyrinth of cryptic symbols and inscriptions, enticingly providing elusive hints towards uncharted realms within the Ancient Temple and the sacred secrets concealed within the hidden crypt."},
       "valid_moves": {"north": false, "south": true, "west": true, "east": true},
       "description": "As you wander through the dense wilderness, you chance upon an age-old temple concealed in an aura of mystique. The air around you seems to vibrate with an otherworldly presence, and intricate enigmatic symbols decorate the temple walls, whispering untold secrets of the past. Amidst the palpable intrigue, you can't help but wonder if these symbols might guide you to a hidden crypt within the temple's depths.",
       "feature_location_description": "Your attention is also drawn to all the interesting ancient inscriptions on the walls. Maybe I can read them.",
@@ -30,7 +30,7 @@
     "Room_4": {
       "name": "Hidden Crypt",
       "interactive_items": {"Laser Shield":"There is a laser shield glowing on the far wall." },
-      "feature_item": {"mysterious lever": "As you pull the lever, a deafening noise reverberates through the room, and in a moment of surprise, a hidden door creaks open, revealing a tantalizing glimpse of something unknown beyond."},
+      "feature_item": {"lever": "As you pull the lever, a deafening noise reverberates through the room, and in a moment of surprise, a hidden door creaks open, revealing a tantalizing glimpse of something unknown beyond."},
       "valid_moves": {"north": true, "south": true, "west": false, "east": true},
       "description": "As you venture deeper into the labyrinthine underground tunnels, an astounding revelation awaits - a concealed crypt, seemingly waiting to be unlocked. The walls of this hidden chamber bear cryptic engravings, speaking of an ancient and mysterious past. Remarkably, rows of age-old coffins line the dimly lit space, hinting at its potential use as a long-forgotten Resistance Hideout, where secrets and courage intertwine to challenge oppressive forces.",
       "feature_location_description": "What is that peculiar looking lever to the side of the crypt. What will happen if I pull it?",

@@ -40,7 +40,7 @@
       "spawnRoom": "Ancient Temple",
       "interaction": "There seems to be a handheld device for communicating with the resistance base. Now you can maintain contact with base and intercept pig mutant communications..."
     },
-    "sample": {
+    "mutagen sample": {
       "name": "Mutagen Sample",
       "description": "a glowing substance collected from the reactor site.",
       "effect": "Provides proof of the power source and aids in devising sabotage plan.",
@@ -70,7 +70,7 @@
       "spawnRoom": "Torture Chamber",
       "interaction": "There seems to be a powerful tool that can cut through doors or fences. It gives you access to new areas and can be used as a makeshift weapon..."
     },
-    "shield": {
+    "laser shield": {
       "name": "Laser Shield",
       "description": "a high-tech device that absorbs energy from laser attacks.",
       "effect": "Protects player from harm during the final showdown.",
