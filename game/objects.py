@@ -35,9 +35,14 @@ class Objects:
                 return obj_value
         return None
 
+    def mark_item_as_equipped(self, item_name):
+        """Marks the specified item as equipped"""
+        item_data = self.get_object(item_name)
+        if item_data:
+            item_data["equipped"] = True
 
-    # def set_object_presence(self, item_name, is_present):
-    #     item = self.get_object(item_name)
-
-    #     if item:
-    #         item["isPresent"] = is_present
+    def handle_item_effect(self, item_name):
+        """Handles the effect of using the specified item"""
+        item_data = self.get_object(item_name)
+        if item_data:
+            print(item_data["effect"])

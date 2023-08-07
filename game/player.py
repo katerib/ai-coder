@@ -43,7 +43,7 @@ class Player:
                 self.current_room = next_room
                 self.map.set_current_room(self.current_room)
                 self.map.increment_room_count()
-                print(f"You move to {self.current_room['name']}.")
+                print(f"You move to the {self.current_room['name']}.")
                 return
             # Check if command is a direction
             elif self.map.is_move_valid(destination.lower()):
@@ -51,7 +51,7 @@ class Player:
                 self.current_room = next_room
                 self.map.set_current_room(self.current_room)
                 self.map.increment_room_count()
-                print(f"You move to {self.current_room['name']}")
+                print(f"You move to the {self.current_room['name']}")
                 return
             else:
                 print(

@@ -63,17 +63,21 @@ class TextAdventureGame:
             "objects": self.objects.serialize(),
         }
 
-        # Update the isPresent attribute for each room based on the items in the player's inventory
+        # Remove items from the interactive_items of each room if they are in the player's inventory
         for room in self.map.map_data.values():
+            items_to_remove = []
             for item in room["interactive_items"]:
-                item_present_in_inventory = item.lower() in self.player.inventory.items
-                room["isPresent"] = not item_present_in_inventory
+                if item.lower() in self.player.inventory.items:
+                    items_to_remove.append(item)
+            for item in items_to_remove:
+                del room["interactive_items"][item]
 
         backup_directory = os.path.dirname(TextAdventureGame.SAVE_FILE)
         os.makedirs(backup_directory, exist_ok=True)
 
         with open(TextAdventureGame.SAVE_FILE, "w") as file:
             json.dump(game_state, file)
+
 
     def load_game(self):
         """
@@ -89,14 +93,18 @@ class TextAdventureGame:
                 game_state["player"], self.map, self.objects
             )
 
-            # Update the isPresent attribute for each room based on the items in the player's inventory
+            # If an item is in the player's inventory, ensure it's not present in any room's interactive_items
             for room in self.map.map_data.values():
+                items_to_remove = []
                 for item in room["interactive_items"]:
-                    item_present_in_inventory = item.lower() in self.player.inventory.items
-                    room["isPresent"] = not item_present_in_inventory
+                    if item.lower() in self.player.inventory.items:
+                        items_to_remove.append(item)
+                for item in items_to_remove:
+                    del room["interactive_items"][item]
             return True
         else:
             return False
+
 
     def reset_game(self, exit_game=False):
         """
@@ -134,7 +142,11 @@ class TextAdventureGame:
         self.player = Player(name, starting_room, self.map, self.objects)
 
     def move_player(self, direction):
+        current_room_name = self.player.current_room["name"]
         self.player.move(direction.strip())
+        if self.player.current_room["name"] != current_room_name:
+            print(self.player.current_room["description"])  
+
 
     def take_item(self, item):
         item_name, item_location = self.player.take_item_from_room(item)
@@ -146,28 +158,25 @@ class TextAdventureGame:
 
 
     def use_item(self, item):
-        # Get the item data from the Objects class based on the item name
-        item_data = self.objects.get_object(item)
+        inventory_item = self.player.inventory.get_item(item)
+        
+        if inventory_item:
+            item_data = self.objects.get_object(item)
 
-        if item_data:
-            item_name = item_data["name"]
+            if item_data:
+                item_name = item_data["name"]
 
-            # Check if the item exists in the player's inventory
-            inventory_item = self.player.inventory.get_item(item)
-            if inventory_item:
                 if item_data["equipped"]:
-                    # Item is already equipped, print a message to inform the player
                     print(f"The {item_name} is already equipped.")
                 else:
-                    pass
-                    # Mark the item as equipped in the objects JSON
-                    # self.objects.mark_item_as_equipped(item)
-                    # Print out the effect of using the item
-                    # self.objects.handle_item_effect(item_data)
+                    self.objects.mark_item_as_equipped(item_name)
+                    print(item_data["effect"])
             else:
-                print("You don't have that item in your inventory.")
+                print("Item not found.")
         else:
-            print("Item not found.")
+            print("You don't have that item in your inventory.")
+
+
 
     def handle_command(self, verb, obj):
         if verb == "move" or verb == 'go':
@@ -213,7 +222,7 @@ class TextAdventureGame:
                 print(f"Game loaded successfully.")
             else:
                 print("No saved game data found.")
-        elif verb == "reset backups":
+        elif verb == "reset backups" or verb == "reset" or verb == "reset backup":
             self.reset_backups()
         else:
             print("Invalid command.")
@@ -225,7 +234,7 @@ class TextAdventureGame:
             f"\nWelcome to the game {self.player.get_name()}! Type help for a list of commands. \nNot sure what to do first? Get started by looking around the room with 'look'.")
 
         while True:
-            # self.check_terminal_size()  
+            self.check_terminal_size()  
 
             print("\nWhat will you do next?")
 
