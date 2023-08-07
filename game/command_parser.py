@@ -17,7 +17,7 @@ class CommandParser:
         verbs = ["move", "take", "use", "quit", "hit", "pull", "glance", "glance at", "go", "look", "inventory",
                  "examine", "show", "turn on", "turn off", "insert", "upgrade", "study", "cut", "activate", "deactivate",
                  "decipher", "display", "help", "drop", "look at", "read", "pick up", "exit", "analyze",
-                 "strike", "push", "open", "tug", "yank", "grab", "save", "load", "reset backups"]
+                 "strike", "push", "open", "tug", "yank", "grab", "save", "load", "reset backups", "reset backup", "reset"]
 
         prepositions = CommandParser.identify_prepositions(command)
 
