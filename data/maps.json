@@ -2,6 +2,7 @@
   "maps": {
     "Room_1": {
       "name": "Village Hut",
+      "short_description": "You are in the Village Hut. Take a moment to look around again.",
       "interactive_items": {"torchlight":"There's an unlit torchlight on the ground beside you."},
       "feature_item": {"old wooden chest": "The force of your hit jolts the old wooden chest, leaving you intrigued about the concealed contents within and their potential significance on your journey to unravel the Abandoned Laboratory's mysteries."},
       "valid_moves": {"north": false, "south": false, "west": false, "east": true},
@@ -11,6 +12,7 @@
     },
     "Room_2": {
       "name": "Abandoned Laboratory",
+      "short_description": "You are in the Abandoned Laboratory. Take a moment to look around again.",
       "interactive_items": {"cast" : "In the dim light of the Abandoned Laboratory, your gaze falls upon a plaster cast, seemingly of great significance."},
       "feature_item": {"mysterious note": "Upon unfolding the aged parchment, you encounter a mysterious note adorned with inscrutable symbols and enigmatic messages, alluding to the long-forgotten experiments and the hidden secrets of the Abandoned Laboratory, as well as unveiling the location of an undiscovered ancient temple, beckoning you towards uncharted realms."},
       "valid_moves": {"north": false, "south": false, "west": true, "east": false},
@@ -20,6 +22,7 @@
     },
     "Room_3": {
       "name": "Ancient Temple",
+      "short_description": "You are in the Ancient Temple. Take a moment to look around again.",
       "interactive_items": {"communicator" : "You see a dirty old communicator lying on the floor that might have significance." },
       "feature_item": {"ancient inscriptions": "Upon deciphering its contents, the ancient inscription reveals a labyrinth of cryptic symbols and inscriptions, enticingly providing elusive hints towards uncharted realms within the Ancient Temple and the sacred secrets concealed within the hidden crypt."},
       "valid_moves": {"north": false, "south": true, "west": true, "east": true},
@@ -29,6 +32,7 @@
     },
     "Room_4": {
       "name": "Hidden Crypt",
+      "short_description": "You are in the Hidden Crypt. Take a moment to look around again.",
       "interactive_items": {"Laser Shield":"There is a laser shield glowing on the far wall." },
       "feature_item": {"lever": "As you pull the lever, a deafening noise reverberates through the room, and in a moment of surprise, a hidden door creaks open, revealing a tantalizing glimpse of something unknown beyond."},
       "valid_moves": {"north": true, "south": true, "west": false, "east": true},
@@ -38,6 +42,7 @@
     },
     "Room_5": {
       "name": "Resistance Hideout",
+      "short_description": "You are in the Resistance Hideout. Take a moment to look around again.",
       "interactive_items": {"blueprints" :"There are blueprints on the ground."},
       "feature_item": {"locked cabinet": "Exerting force, you yank open the locked cabinet, causing a myriad of items to spill out in disarray, but nothing of value was found."},
       "valid_moves": {"north": false, "south": true, "west": false, "east": true},
@@ -47,15 +52,17 @@
     },
     "Room_6": {
       "name": "Reactor Tunnels",
+      "short_description": "You are in the Reactor Tunnels. Take a moment to look around again.",
       "interactive_items": {"cell": "There is a power cell in the corner of the room."},
       "feature_item": {"strange vines": "You eagerly pull at the strange vines, hoping for a special response, but they remain unyielding, revealing nothing of significance."},
       "valid_moves": {"north": false, "south": true, "west": true, "east": false},
       "description": "As you cautiously tread through dim and foreboding tunnels, you draw closer to the heart of the reactor. The atmosphere becomes thick with radiation, and the distant reverberation of machinery creates an unsettling ambiance. The eerie surroundings fuel your trepidation, raising the possibility that you might stumble upon the dreaded torture chamber hidden within the depths.",
-      "feature_location_description": "Why is there a ton of strange vines hanging from the ceiling. Maybe pulling it might review something.",
+      "feature_location_description": "Why is there a ton of strange vines hanging from the ceiling. Maybe pulling it might reveal something.",
       "action_verb": "pull"
     },
     "Room_7": {
       "name": "Torture Chamber",
+      "short_description": "You are in the Torture Chamber. Take a moment to look around again.",
       "interactive_items": {"cutter" : "There is a plasma cutter on the ground."},
       "feature_item": {"amulet": "Upon striking the amulet with force, a surge of mystical energy envelops the player, empowering them with a radiant aura that enhances their abilities."},
       "valid_moves": {"north": true, "south": true, "west": true, "east": true},
@@ -65,6 +72,7 @@
     },
     "Room_8": {
       "name": "Pig Mutant Stronghold",
+      "short_description": "You are in the Pig Mutant Stronghold. Take a moment to look around again.",
       "interactive_items": {"message": "There is a crumpled looking message on the ground."},
       "feature_item": {"mysterious mural": "As you study the mysterious mural, it depicts the fearsome Pig Mutant King in all his malevolent glory, serving as a grim reminder of the oppressive ruler that holds sway over the stronghold."},
       "valid_moves": {"north": false, "south": true, "west": true, "east": true},
@@ -74,6 +82,7 @@
     },
     "Room_9": {
       "name": "Throne Room",
+      "short_description": "You are in the Throne Room. Take a moment to look around again.",
       "interactive_items": {"Mutagen Sample": "There is a mutagen sample on the desk."},
       "feature_item": {"mystical crystal": " Intuitively, you strike the crystal, and a surge of empowering energy courses through you, bestowing enhanced abilities to aid you in the final confrontation against the Pig Mutant King."},
       "valid_moves": {"north": true, "south": false, "west": true, "east": false},
@@ -83,6 +92,7 @@
     },
     "Room_10": {
       "name": "Triumphant Courtyard",
+      "short_description": "You are in the Triumphant Courtyard. Take a moment to look around again.",
       "interactive_items": {"crown": "In the midst of celebration, you find a crown waiting to be claimed."},
       "feature_item": {"victory bell": "As the joyful sound of the Victory Bell reverberates through the courtyard, the brave resistance fighters celebrate their hard-won victory over the tyrannical Pig Mutant King, restoring peace and hope to the once-doomed land of Porktopia. The people gather to honor their valiant heroes, and the vibrant energy of unity fills the air, marking the end of an epic saga of courage and determination. Congratulations on leading Porktopia to freedom and vanquishing the Pig Mutant King's rule! Game over."},
       "valid_moves": {"north": true, "south": true, "west": true, "east": true},
