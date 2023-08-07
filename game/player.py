@@ -8,6 +8,8 @@ class Player:
         self.map = game_map
         self.objects = objects
         self.inventory = Inventory()  # Initialize an empty inventory for the player
+        self.room_history = []
+
 
     def serialize(self):
         return {
@@ -15,6 +17,7 @@ class Player:
             "current_room": self.current_room["name"],
             "inventory": self.inventory.serialize(),
             "map": self.map.serialize(),
+            
         }
 
     @classmethod
@@ -35,6 +38,8 @@ class Player:
 
         # Get the next room to compare with the destination
         next_room = self.map.get_next_room()
+        self.room_history.append(self.current_room)
+
 
         # Checks for last condition to prevent moving at the last room
         if next_room:
@@ -58,6 +63,18 @@ class Player:
                     "You can't go that way. Try another way: north, south, east, or west.")
 
         return
+    
+    def move_back(self):
+        if self.room_history:
+            # Pop the last room from the history
+            self.current_room = self.room_history.pop()
+            self.map.set_current_room(self.current_room) 
+            self.map.room_count -= 1
+            print(f"You moved back to {self.current_room['name']}.")
+        else:
+            print("You can't move back any further.")
+
+
 
     def get_interactive_items_descriptions(self):
         descriptions = []

@@ -61,9 +61,9 @@ class TextAdventureGame:
             "player": self.player.serialize(),
             "map": self.map.serialize(),
             "objects": self.objects.serialize(),
+            "room_history": self.player.room_history
         }
 
-        # Remove items from the interactive_items of each room if they are in the player's inventory
         for room in self.map.map_data.values():
             items_to_remove = []
             for item in room["interactive_items"]:
@@ -81,7 +81,7 @@ class TextAdventureGame:
 
     def load_game(self):
         """
-        Method to load the game state from the JSON file with the fixed filename "load_data.json".
+        Method to load the game state from the JSON file with the fixed filename "save_data.json".
         """
         if os.path.exists(TextAdventureGame.SAVE_FILE):
             with open(TextAdventureGame.SAVE_FILE, "r") as file:
@@ -89,11 +89,13 @@ class TextAdventureGame:
 
             self.map.deserialize(game_state["map"])
             self.objects.deserialize(game_state["objects"])
-            self.player = Player.deserialize(
-                game_state["player"], self.map, self.objects
-            )
+            self.player = Player.deserialize(game_state["player"], self.map, self.objects)
 
-            # If an item is in the player's inventory, ensure it's not present in any room's interactive_items
+            # Restore room history if it exists in the saved data
+            if "room_history" in game_state:
+                self.player.room_history = game_state["room_history"]
+
+            # Remove items from the interactive_items of each room if they are in the player's inventory
             for room in self.map.map_data.values():
                 items_to_remove = []
                 for item in room["interactive_items"]:
@@ -101,9 +103,11 @@ class TextAdventureGame:
                         items_to_remove.append(item)
                 for item in items_to_remove:
                     del room["interactive_items"][item]
+
             return True
         else:
             return False
+
 
 
     def reset_game(self, exit_game=False):
@@ -112,7 +116,7 @@ class TextAdventureGame:
         """
         self.map = Map()
         self.objects = Objects()
-        self.create_player()  # Create a new player when game is reset
+        self.create_player() 
         
         if exit_game:
             print("Game has been reset and will now exit.")
@@ -140,13 +144,15 @@ class TextAdventureGame:
         name = input("Enter your name: ")
         starting_room = self.map.get_current_room()
         self.player = Player(name, starting_room, self.map, self.objects)
+        self.player.room_history = []
+        
 
     def move_player(self, direction):
-        current_room_name = self.player.current_room["name"]
-        self.player.move(direction.strip())
-        if self.player.current_room["name"] != current_room_name:
-            print(self.player.current_room["description"])  
-
+        direction = direction.strip()
+        if direction == "back":
+            self.player.move_back()
+        else:
+            self.player.move(direction)
 
     def take_item(self, item):
         item_name, item_location = self.player.take_item_from_room(item)
@@ -224,6 +230,8 @@ class TextAdventureGame:
                 print("No saved game data found.")
         elif verb == "reset backups" or verb == "reset" or verb == "reset backup":
             self.reset_backups()
+        elif verb == "back":
+            self.move_player("back")
         else:
             print("Invalid command.")
 
