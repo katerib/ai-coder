@@ -61,7 +61,8 @@ class TextAdventureGame:
             "player": self.player.serialize(),
             "map": self.map.serialize(),
             "objects": self.objects.serialize(),
-            "room_history": self.player.room_history
+            "room_history": self.player.room_history,
+            "visited_rooms": list(self.player.visited_rooms)  
         }
 
         for room in self.map.map_data.values():
@@ -94,6 +95,10 @@ class TextAdventureGame:
             # Restore room history if it exists in the saved data
             if "room_history" in game_state:
                 self.player.room_history = game_state["room_history"]
+                
+            # Restore visited rooms if it exists in the saved data
+            if "visited_rooms" in game_state:
+                self.player.visited_rooms = set(game_state["visited_rooms"])
 
             # Remove items from the interactive_items of each room if they are in the player's inventory
             for room in self.map.map_data.values():
@@ -107,6 +112,7 @@ class TextAdventureGame:
             return True
         else:
             return False
+
 
 
 
@@ -148,11 +154,25 @@ class TextAdventureGame:
         
 
     def move_player(self, direction):
+        """
+        Method to move the player in a given direction. The direction should be a string. Supports moving "back". 
+        """
         direction = direction.strip()
         if direction == "back":
             self.player.move_back()
         else:
+            previous_room = self.player.current_room
             self.player.move(direction)
+            # if previous_room != self.player.current_room:
+            #     if self.player.current_room["name"] not in self.player.visited_rooms:
+            #         self.player.visited_rooms.add(self.player.current_room["name"])
+            #         print(self.player.current_room["description"])
+            #         print("X")
+            #     else:
+            #         print(self.player.current_room["short_description"])
+            #         print("Y")
+
+
 
     def take_item(self, item):
         item_name, item_location = self.player.take_item_from_room(item)
@@ -164,6 +184,9 @@ class TextAdventureGame:
 
 
     def use_item(self, item):
+        """
+        Method to use an item from the player's inventory. The item should be a string.
+        """
         inventory_item = self.player.inventory.get_item(item)
         
         if inventory_item:
@@ -236,7 +259,7 @@ class TextAdventureGame:
             print("Invalid command.")
 
     def play(self):
-        # self.check_terminal_size()
+        self.check_terminal_size()
 
         print(
             f"\nWelcome to the game {self.player.get_name()}! Type help for a list of commands. \nNot sure what to do first? Get started by looking around the room with 'look'.")

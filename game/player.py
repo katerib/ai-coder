@@ -7,8 +7,10 @@ class Player:
         self.current_room = starting_room
         self.map = game_map
         self.objects = objects
-        self.inventory = Inventory()  # Initialize an empty inventory for the player
+        self.inventory = Inventory()
         self.room_history = []
+        self.visited_rooms = set()
+        self.visited_rooms.add(self.current_room["name"])
 
 
     def serialize(self):
@@ -16,64 +18,59 @@ class Player:
             "name": self.name,
             "current_room": self.current_room["name"],
             "inventory": self.inventory.serialize(),
-            "map": self.map.serialize(),
-            
+            "visited_rooms": list(self.visited_rooms) 
         }
 
     @classmethod
     def deserialize(cls, data, map_obj, objects_obj):
-        player = cls(data["name"], None, map_obj, objects_obj)
-        player.current_room = map_obj.get_room_by_name(data["current_room"])
+        current_room = map_obj.get_room_by_name(data["current_room"])
+        player = cls(data["name"], current_room, map_obj, objects_obj)
         player.inventory.deserialize(data["inventory"])
+        
+        # Add this line to restore the visited rooms from the saved game data
+        if "visited_rooms" in data:
+            player.visited_rooms = set(data["visited_rooms"])
+        
         return player
 
     def get_name(self):
         return self.name
-
+    
     def move(self, destination):
-        # Check if the player has all the items
-        if len(self.current_room["interactive_items"]) >= 1:
-            print("You need to find more items")
-            return
-
-        # Get the next room to compare with the destination
         next_room = self.map.get_next_room()
         self.room_history.append(self.current_room)
 
-
-        # Checks for last condition to prevent moving at the last room
         if next_room:
-            # Check if command is just room name
             if destination.lower() == next_room["name"].lower():
                 self.current_room = next_room
-                self.map.set_current_room(self.current_room)
-                self.map.increment_room_count()
-                print(f"You move to the {self.current_room['name']}.")
-                return
-            # Check if command is a direction
             elif self.map.is_move_valid(destination.lower()):
-                # Checks for last condition to prevent moving at the last room
                 self.current_room = next_room
-                self.map.set_current_room(self.current_room)
-                self.map.increment_room_count()
-                print(f"You move to the {self.current_room['name']}")
-                return
             else:
-                print(
-                    "You can't go that way. Try another way: north, south, east, or west.")
+                print("You can't go that way. Try another way: north, south, east, or west.")
+                return
 
-        return
-    
+            if self.current_room["name"] not in self.visited_rooms:
+                print(self.current_room["description"])
+                self.visited_rooms.add(self.current_room["name"])
+            else:
+                print(self.current_room["short_description"])
+            self.map.set_current_room(self.current_room)
+            self.map.increment_room_count()
+
+
     def move_back(self):
         if self.room_history:
-            # Pop the last room from the history
             self.current_room = self.room_history.pop()
+
+            if self.current_room["name"] not in self.visited_rooms:
+                print(self.current_room["description"])
+            else:
+                print(self.current_room["short_description"])
+
             self.map.set_current_room(self.current_room) 
             self.map.room_count -= 1
-            print(f"You moved back to {self.current_room['name']}.")
         else:
             print("You can't move back any further.")
-
 
 
     def get_interactive_items_descriptions(self):
@@ -82,6 +79,7 @@ class Player:
             description = self.objects.get_description(item_name)
             descriptions.append(description)
         return descriptions
+
 
     def take_item_from_room(self, item):
         item = item.lower()
@@ -96,7 +94,6 @@ class Player:
 
     def add_item_to_room(self, item, location):
         self.current_room["interactive_items"].update({item: location})
-        # self.objects.set_object_presence(item, True)
         print(f"You've added the {item} to the room.")
 
     def drop_item(self, item):
