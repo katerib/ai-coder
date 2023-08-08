@@ -163,14 +163,6 @@ class TextAdventureGame:
         else:
             previous_room = self.player.current_room
             self.player.move(direction)
-            # if previous_room != self.player.current_room:
-            #     if self.player.current_room["name"] not in self.player.visited_rooms:
-            #         self.player.visited_rooms.add(self.player.current_room["name"])
-            #         print(self.player.current_room["description"])
-            #         print("X")
-            #     else:
-            #         print(self.player.current_room["short_description"])
-            #         print("Y")
 
 
 

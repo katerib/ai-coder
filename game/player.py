@@ -38,7 +38,6 @@ class Player:
     
     def move(self, destination):
         next_room = self.map.get_next_room()
-        self.room_history.append(self.current_room)
 
         if next_room:
             if destination.lower() == next_room["name"].lower():
@@ -54,20 +53,22 @@ class Player:
                 self.visited_rooms.add(self.current_room["name"])
             else:
                 print(self.current_room["short_description"])
+
             self.map.set_current_room(self.current_room)
             self.map.increment_room_count()
 
-
     def move_back(self):
-        if self.room_history:
-            self.current_room = self.room_history.pop()
+        ORDERED_ROOMS = ["Village Hut", "Abandoned Laboratory", "Ancient Temple", "Hidden Crypt", "Resistance Hideout", "Reactor Tunnels", "Torture Chamber", "Pig Mutant Stronghold", "Throne Room", "Triumphant Courtyard"]
+        current_index = ORDERED_ROOMS.index(self.current_room["name"])
 
+        if current_index > 0:
+            self.current_room = self.map.get_room_by_name(ORDERED_ROOMS[current_index - 1])
             if self.current_room["name"] not in self.visited_rooms:
                 print(self.current_room["description"])
             else:
                 print(self.current_room["short_description"])
 
-            self.map.set_current_room(self.current_room) 
+            self.map.set_current_room(self.current_room)
             self.map.room_count -= 1
         else:
             print("You can't move back any further.")
