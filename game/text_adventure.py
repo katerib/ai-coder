@@ -10,7 +10,7 @@ import json
 class TextAdventureGame:
     MIN_WIDTH = 80
     MIN_HEIGHT = 24
-    
+
     SAVE_FILE = "backup/save_data.json"
 
     def __init__(self):
@@ -35,7 +35,10 @@ class TextAdventureGame:
         print("- look at (to look at something)")
         print("- inventory (to view your inventory)")
         print("- quit or exit (to exit the game)")
-        
+        print("- save (to save the game)")
+        print("- load (to load the game)")
+        print("- reset backups (to delete all saved data)")
+
         print("Not all commands are shown here. Try to think of other commands that might work! \n")
 
     @staticmethod
@@ -62,7 +65,7 @@ class TextAdventureGame:
             "map": self.map.serialize(),
             "objects": self.objects.serialize(),
             "room_history": self.player.room_history,
-            "visited_rooms": list(self.player.visited_rooms)  
+            "visited_rooms": list(self.player.visited_rooms)
         }
 
         for room in self.map.map_data.values():
@@ -79,7 +82,6 @@ class TextAdventureGame:
         with open(TextAdventureGame.SAVE_FILE, "w") as file:
             json.dump(game_state, file)
 
-
     def load_game(self):
         """
         Method to load the game state from the JSON file with the fixed filename "save_data.json".
@@ -90,12 +92,13 @@ class TextAdventureGame:
 
             self.map.deserialize(game_state["map"])
             self.objects.deserialize(game_state["objects"])
-            self.player = Player.deserialize(game_state["player"], self.map, self.objects)
+            self.player = Player.deserialize(
+                game_state["player"], self.map, self.objects)
 
             # Restore room history if it exists in the saved data
             if "room_history" in game_state:
                 self.player.room_history = game_state["room_history"]
-                
+
             # Restore visited rooms if it exists in the saved data
             if "visited_rooms" in game_state:
                 self.player.visited_rooms = set(game_state["visited_rooms"])
@@ -113,23 +116,19 @@ class TextAdventureGame:
         else:
             return False
 
-
-
-
     def reset_game(self, exit_game=False):
         """
         Method to reset the game state.
         """
         self.map = Map()
         self.objects = Objects()
-        self.create_player() 
-        
+        self.create_player()
+
         if exit_game:
             print("Game has been reset and will now exit.")
             exit()
         else:
             print("Game has been reset.")
-
 
     def reset_backups(self, exit_after_reset=False):
         """
@@ -142,7 +141,6 @@ class TextAdventureGame:
         else:
             print("No saved data found to delete.")
 
-
     def create_player(self):
         """
         Method to create a new player.
@@ -151,7 +149,6 @@ class TextAdventureGame:
         starting_room = self.map.get_current_room()
         self.player = Player(name, starting_room, self.map, self.objects)
         self.player.room_history = []
-        
 
     def move_player(self, direction):
         """
@@ -164,8 +161,6 @@ class TextAdventureGame:
             previous_room = self.player.current_room
             self.player.move(direction)
 
-
-
     def take_item(self, item):
         item_name, item_location = self.player.take_item_from_room(item)
         if item_name:
@@ -174,13 +169,12 @@ class TextAdventureGame:
         else:
             print("There is no such item in this room or you can't pick this item up.")
 
-
     def use_item(self, item):
         """
         Method to use an item from the player's inventory. The item should be a string.
         """
         inventory_item = self.player.inventory.get_item(item)
-        
+
         if inventory_item:
             item_data = self.objects.get_object(item)
 
@@ -197,8 +191,6 @@ class TextAdventureGame:
         else:
             print("You don't have that item in your inventory.")
 
-
-
     def handle_command(self, verb, obj):
         if verb == "move" or verb == 'go':
             self.move_player(obj)
@@ -214,7 +206,7 @@ class TextAdventureGame:
         elif verb == "hit" or verb == "strike" or verb == "push" or verb == "open":
             hit_verb(self.player.current_room, obj)
         elif verb == "pull" or verb == "tug" or verb == "yank":
-            pull_verb(self.player.current_room, obj)
+            pull_verb(self.player.current_room, obj, self.player.inventory)
         elif verb == "read" or verb == "analyze":
             read_verb(self.player.current_room, obj)
         elif verb == "look":
@@ -257,7 +249,7 @@ class TextAdventureGame:
             f"\nWelcome to the game {self.player.get_name()}! Type help for a list of commands. \nNot sure what to do first? Get started by looking around the room with 'look'.")
 
         while True:
-            self.check_terminal_size()  
+            self.check_terminal_size()
 
             print("\nWhat will you do next?")
 
