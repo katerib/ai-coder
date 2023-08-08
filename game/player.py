@@ -8,7 +8,6 @@ class Player:
         self.map = game_map
         self.objects = objects
         self.inventory = Inventory()
-        self.room_history = []
         self.visited_rooms = set()
         self.visited_rooms.add(self.current_room["name"])
 

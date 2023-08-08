@@ -8,14 +8,22 @@ def hit_verb(map, target):
     else:
         print(f"You can't hit that.")
 
-def pull_verb(map, object_to_pull):
+def pull_verb(map, object_to_pull, player_inventory):
     """
     Handle the "pull" verb action.
     """
-    if object_to_pull in map['feature_item'] and map['action_verb'] == 'pull':
+    final_room = 'Triumphant Courtyard'
+
+    if map['name'] == final_room:
+        if len(player_inventory.view_inventory()) < 10:
+            print("You can't pull the victory bell yet. You need to collect all 10 items first.")
+        else:
+            print(map['feature_item'][object_to_pull])
+    elif object_to_pull in map['feature_item'] and map['action_verb'] == 'pull':
         print(map['feature_item'][object_to_pull])
     else:
-        print(f"You can't pull that.")
+        print("You can't pull that.")
+
 
 def read_verb(map, object_to_read):
     """
