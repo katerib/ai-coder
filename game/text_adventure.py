@@ -64,7 +64,6 @@ class TextAdventureGame:
             "player": self.player.serialize(),
             "map": self.map.serialize(),
             "objects": self.objects.serialize(),
-            "room_history": self.player.room_history,
             "visited_rooms": list(self.player.visited_rooms)
         }
 
@@ -94,10 +93,6 @@ class TextAdventureGame:
             self.objects.deserialize(game_state["objects"])
             self.player = Player.deserialize(
                 game_state["player"], self.map, self.objects)
-
-            # Restore room history if it exists in the saved data
-            if "room_history" in game_state:
-                self.player.room_history = game_state["room_history"]
 
             # Restore visited rooms if it exists in the saved data
             if "visited_rooms" in game_state:
@@ -148,7 +143,6 @@ class TextAdventureGame:
         name = input("Enter your name: ")
         starting_room = self.map.get_current_room()
         self.player = Player(name, starting_room, self.map, self.objects)
-        self.player.room_history = []
 
     def move_player(self, direction):
         """
@@ -164,7 +158,7 @@ class TextAdventureGame:
     def take_item(self, item):
         item_name, item_location = self.player.take_item_from_room(item)
         if item_name:
-            self.player.inventory.add_item(item_name, item_location)
+            self.player.inventory.add_item(item_name.lower(), item_location)
             print(f"You picked up {item_name}")
         else:
             print("There is no such item in this room or you can't pick this item up.")
@@ -176,15 +170,15 @@ class TextAdventureGame:
         inventory_item = self.player.inventory.get_item(item)
 
         if inventory_item:
+            
             item_data = self.objects.get_object(item)
 
             if item_data:
-                item_name = item_data["name"]
 
                 if item_data["equipped"]:
-                    print(f"The {item_name} is already equipped.")
+                    print(f"The {item} is already equipped.")
                 else:
-                    self.objects.mark_item_as_equipped(item_name)
+                    self.objects.mark_item_as_equipped(item)
                     print(item_data["effect"])
             else:
                 print("Item not found.")

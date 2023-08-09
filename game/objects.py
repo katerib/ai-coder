@@ -41,6 +41,12 @@ class Objects:
         if item_data:
             item_data["equipped"] = True
 
+    def mark_item_as_unequipped(self, item_name):
+        """Marks the specified item as equipped"""
+        item_data = self.get_object(item_name)
+        if item_data:
+            item_data["equipped"] = False
+
     def handle_item_effect(self, item_name):
         """Handles the effect of using the specified item"""
         item_data = self.get_object(item_name)
