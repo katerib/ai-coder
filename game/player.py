@@ -98,9 +98,11 @@ class Player:
 
     def drop_item(self, item):
         inventory_item__value = self.inventory.get_item(item)
+
         if inventory_item__value:
             self.add_item_to_room(item.lower(), inventory_item__value)
             self.inventory.remove_item(item.lower())
+            self.objects.mark_item_as_unequipped(item.lower())
             print(f"You dropped the {item}.")
         else:
             print("You don't have that item in your inventory.")
